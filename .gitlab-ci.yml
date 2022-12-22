@@ -1,0 +1,17 @@
+stages:
+  - dockerbuild-push
+
+package:
+  only:
+    - main # main 브런치에 통합되는 것만 추가하기
+  image: docker:latest # 도커가 깔린 이미지라는 뜻
+  stage: dockerbuild-push
+  services:
+    - docker:dind
+  before_script:
+    - docker login registry.gitlab.com -u $GITLAB_USER -p $GITLAB_PASSWORD
+  script:
+    - docker build -t registry.gitlab.com/$GITLAB_USER/$PROJECT_NAME .
+    - docker push registry.gitlab.com/$GITLAB_USER/$PROJECT_NAME
+  after_script:
+    - docker logout
