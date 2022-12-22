@@ -11,7 +11,7 @@ package:
   before_script:
     - docker login registry.gitlab.com -u $GITLAB_USER -p $GITLAB_PASSWORD
   script:
-    - docker build -t registry.gitlab.com/$GITLAB_USER/Final_Project_LeeSanghun_team2 . 
-    - docker push registry.gitlab.com/$GITLAB_USER/Final_Project_LeeSanghun_team2
+    - docker build -t registry.gitlab.com/$GITLAB_USER/final_project_leesanghun_team2 . 
+    - docker push registry.gitlab.com/$GITLAB_USER/final_project_leesanghun_team2
   after_script:
     - docker logout
