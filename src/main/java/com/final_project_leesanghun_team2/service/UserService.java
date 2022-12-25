@@ -30,7 +30,7 @@ public class UserService {
         userRepository.findByUserName(userJoinRequest.getUserName())
                 .ifPresent(user ->
                 {throw new UserSnsException(ErrorCode.DUPLICATED_USER_NAME,
-                        String.format("UserName:%s", userJoinRequest.getUserName()));
+                        String.format("%s는 이미 사용중인 아이디입니다.", userJoinRequest.getUserName()));
                 });
 
         User savedUSer = userRepository.save(userJoinRequest.toEntity(encoder.encode(userJoinRequest.getPassword())));
@@ -48,8 +48,7 @@ public class UserService {
             String.format("%s는 가입된적이 없습니다.", dto.getUserName())));
 
         if (!encoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new UserSnsException(ErrorCode.INVALID_PASSWORD,
-                    String.format("%s 또는 %s가 잘못됐습니다.", dto.getUserName(), dto.getPassword()));
+            throw new UserSnsException(ErrorCode.INVALID_PASSWORD, "비밀번호가 틀렸습니다.");
         }
 
         return JwtTokenUtil.createToken(dto.getUserName(), secretKey, expireTimeMS);
