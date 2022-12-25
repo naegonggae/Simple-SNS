@@ -43,7 +43,7 @@ public class UserService {
     public String login(UserLoginRequest dto) {
 
         User user = userRepository.findByUserName(dto.getUserName())
-                .orElseThrow(() -> new UserSnsException(ErrorCode.NOT_FOUND,
+                .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND,
             String.format("%s는 가입된적이 없습니다.", dto.getUserName())));
 
         if (!encoder.matches(dto.getPassword(), user.getPassword())) {
