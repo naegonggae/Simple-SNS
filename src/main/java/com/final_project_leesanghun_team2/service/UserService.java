@@ -4,10 +4,13 @@ import com.final_project_leesanghun_team2.domain.User;
 import com.final_project_leesanghun_team2.domain.dto.UserDto;
 import com.final_project_leesanghun_team2.domain.dto.UserJoinRequest;
 import com.final_project_leesanghun_team2.domain.dto.UserLoginRequest;
+import com.final_project_leesanghun_team2.domain.dto.UserLoginResponse;
 import com.final_project_leesanghun_team2.exception.ErrorCode;
 import com.final_project_leesanghun_team2.exception.UserSnsException;
 import com.final_project_leesanghun_team2.repository.UserRepository;
+import com.final_project_leesanghun_team2.utils.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,10 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+
+    @Value("${jwt.token.secret}")
+    private String secretKey;
+    private long expireTimeMS = 1000 * 60 * 60;
 
     public UserDto join(UserJoinRequest userJoinRequest) {
 
@@ -39,10 +46,10 @@ public class UserService {
                 .orElseThrow(() -> new UserSnsException(ErrorCode.NOT_FOUND,
             String.format("%s는 가입된적이 없습니다.", dto.getUserName())));
 
-        if (!encoder.matches(dto.getUserName(), user.getUserName())) {
+        if (!encoder.matches(dto.getPassword(), user.getPassword())) {
             throw new UserSnsException(ErrorCode.INVALID_PASSWORD, String.format("%s 또는 %s가 잘못됐습니다.", dto.getUserName(), dto.getPassword()));
         }
 
-        return "";
+        return JwtTokenUtil.createToken(dto.getUserName(), secretKey, expireTimeMS);
     }
 }

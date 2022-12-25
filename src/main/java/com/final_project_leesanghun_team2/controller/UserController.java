@@ -1,10 +1,7 @@
 package com.final_project_leesanghun_team2.controller;
 
 import com.final_project_leesanghun_team2.domain.Response;
-import com.final_project_leesanghun_team2.domain.dto.UserDto;
-import com.final_project_leesanghun_team2.domain.dto.UserJoinRequest;
-import com.final_project_leesanghun_team2.domain.dto.UserJoinResponse;
-import com.final_project_leesanghun_team2.domain.dto.UserLoginRequest;
+import com.final_project_leesanghun_team2.domain.dto.*;
 import com.final_project_leesanghun_team2.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +21,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Response<String> login(@RequestBody UserLoginRequest dto) {
-        userService.login(dto);
-        return Response.success("token");
+    public Response<UserLoginResponse> login(@RequestBody UserLoginRequest dto) {
+        String jwt = userService.login(dto);
+        return Response.success(new UserLoginResponse(jwt));
     }
 }
