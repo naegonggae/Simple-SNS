@@ -51,6 +51,7 @@ public class UserService {
             throw new UserSnsException(ErrorCode.INVALID_PASSWORD, "비밀번호가 틀렸습니다.");
         }
 
-        return JwtTokenUtil.createToken(dto.getUserName(), secretKey, expireTimeMS);
+        String token = JwtTokenUtil.createToken(dto.getUserName(), secretKey, expireTimeMS);
+        return token;
     }
 }
