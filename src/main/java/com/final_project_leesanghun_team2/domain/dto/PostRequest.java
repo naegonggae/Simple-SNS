@@ -1,5 +1,6 @@
 package com.final_project_leesanghun_team2.domain.dto;
 
+import com.final_project_leesanghun_team2.domain.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,5 +9,12 @@ import lombok.Getter;
 public class PostRequest {
     private String title;
     private String body;
-    private String userName;
+
+    public Post toEntity() {
+        return Post.builder()
+                .title(this.title)
+                .body(this.body)
+                .build();
+
+    }
 }

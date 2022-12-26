@@ -3,7 +3,6 @@ package com.final_project_leesanghun_team2.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.final_project_leesanghun_team2.domain.dto.UserDto;
 import com.final_project_leesanghun_team2.domain.dto.UserJoinRequest;
-import com.final_project_leesanghun_team2.domain.dto.UserJoinResponse;
 import com.final_project_leesanghun_team2.exception.ErrorCode;
 import com.final_project_leesanghun_team2.exception.UserSnsException;
 import com.final_project_leesanghun_team2.service.UserService;
