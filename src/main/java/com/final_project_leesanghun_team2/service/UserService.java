@@ -1,10 +1,9 @@
 package com.final_project_leesanghun_team2.service;
 
-import com.final_project_leesanghun_team2.domain.User;
+import com.final_project_leesanghun_team2.domain.entity.User;
 import com.final_project_leesanghun_team2.domain.dto.UserDto;
 import com.final_project_leesanghun_team2.domain.dto.UserJoinRequest;
 import com.final_project_leesanghun_team2.domain.dto.UserLoginRequest;
-import com.final_project_leesanghun_team2.domain.dto.UserLoginResponse;
 import com.final_project_leesanghun_team2.exception.ErrorCode;
 import com.final_project_leesanghun_team2.exception.UserSnsException;
 import com.final_project_leesanghun_team2.repository.UserRepository;
