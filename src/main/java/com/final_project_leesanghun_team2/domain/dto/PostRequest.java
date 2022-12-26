@@ -5,6 +5,8 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class UserLoginResponse {
-    private String jwt;
+public class PostRequest {
+    private String title;
+    private String body;
+    private String userName;
 }

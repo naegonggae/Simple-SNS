@@ -1,4 +1,4 @@
-package com.final_project_leesanghun_team2.domain.dto;
+package com.final_project_leesanghun_team2.domain.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class UserJoinResponse {
-    private Long userId;
+    private Integer userId;
     private String userName;
 }
