@@ -3,8 +3,8 @@
 --------------
 ### swagger
 
-- localhost:8080/swagger.ui-io
-- ec2-15-164-222-249.ap-northeast-2.compute.amazonaws.com:8080/swagger.ui-io.index.html
+- localhost:8080/swagger-ui
+- ec2-15-164-222-249.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui.index.html
 
 ### end point
 
