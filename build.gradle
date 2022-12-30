@@ -22,7 +22,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	implementation 'nz.net.ultraq.jaxb:jaxb-utilities:2.1.0'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'// 토튼발급받을때 추가하느거야
 	implementation "io.springfox:springfox-boot-starter:3.0.0"
 	implementation "io.springfox:springfox-swagger-ui:3.0.0"
 	compileOnly 'org.projectlombok:lombok'
