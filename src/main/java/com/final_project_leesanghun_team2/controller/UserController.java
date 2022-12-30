@@ -28,7 +28,7 @@ public class UserController {
 
     @PostMapping("/login")
     public Response<UserLoginResponse> login(@RequestBody UserLoginRequest dto) {
-        String jwt = userService.login(dto);
-        return Response.success(new UserLoginResponse(jwt));
+        String token = userService.login(dto);
+        return Response.success(new UserLoginResponse(token));
     }
 }

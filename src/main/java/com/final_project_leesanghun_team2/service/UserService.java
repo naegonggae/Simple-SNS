@@ -40,17 +40,17 @@ public class UserService {
                 .build();
     }
 
-    public String login(UserLoginRequest dto) {
+    public String login(UserLoginRequest userLoginRequest) {
 
-        User user = userRepository.findByUserName(dto.getUserName())
+        User user = userRepository.findByUserName(userLoginRequest.getUserName())
                 .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND,
-            String.format("%s는 가입된적이 없습니다.", dto.getUserName())));
+            String.format("%s는 가입된적이 없습니다.", userLoginRequest.getUserName())));
 
-        if (!encoder.matches(dto.getPassword(), user.getPassword())) {
+        if (!encoder.matches(user.getPassword(), user.getPassword())) {
             throw new UserSnsException(ErrorCode.INVALID_PASSWORD, "비밀번호가 틀렸습니다.");
         }
 
-        String token = JwtTokenUtil.createToken(dto.getUserName(), secretKey, expireTimeMS);
+        String token = JwtTokenUtil.createToken(userLoginRequest.getUserName(), secretKey, expireTimeMS);
         return token;
     }
 }

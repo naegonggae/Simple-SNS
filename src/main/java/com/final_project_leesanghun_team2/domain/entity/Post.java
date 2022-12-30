@@ -20,7 +20,4 @@ public class Post {
     private String title;
     private String body;
     private String userName;
-    private Timestamp created_at;
-    private Timestamp last_modified_at;
-
 }
