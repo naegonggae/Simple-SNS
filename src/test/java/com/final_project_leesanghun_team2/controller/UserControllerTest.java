@@ -79,7 +79,7 @@ class UserControllerTest {
     @DisplayName("로그인 성공")
     @WithMockUser
     void login_success() throws Exception {
-        when(userService.login(any())).thenReturn("token");
+        when(userService.login(any(), any())).thenReturn("token");
 
         mockMvc.perform(post("/api/v1/users/login")
                         .with(csrf())
@@ -97,7 +97,7 @@ class UserControllerTest {
     void login_fail1() throws Exception {
 
         // id, password 받아서
-        when(userService.login(any())).thenThrow(new UserSnsException(ErrorCode.USERNAME_NOT_FOUND, ""));
+        when(userService.login(any(), any())).thenThrow(new UserSnsException(ErrorCode.USERNAME_NOT_FOUND, ""));
 
         // NOT_FOUND 받으면 잘한것이다.
         mockMvc.perform(post("/api/v1/users/login")
@@ -112,7 +112,7 @@ class UserControllerTest {
     @DisplayName("로그인 실패 - password 틀림")
     void login_fail2() throws Exception {
 
-        when(userService.login(any())).thenThrow(new UserSnsException(ErrorCode.INVALID_PASSWORD, ""));
+        when(userService.login(any(), any())).thenThrow(new UserSnsException(ErrorCode.INVALID_PASSWORD, ""));
 
         // NOT_FOUND 받으면 잘한것이다.
         mockMvc.perform(post("/api/v1/users/login")

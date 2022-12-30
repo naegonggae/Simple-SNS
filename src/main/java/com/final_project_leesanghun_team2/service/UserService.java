@@ -22,7 +22,7 @@ public class UserService {
 
     @Value("${jwt.token.secret}")
     private String secretKey;
-    private long expireTimeMS = 1000 * 60 * 60;
+    private Long expireTimeMS = 1000 * 60 * 60l;
 
     public UserDto join(UserJoinRequest userJoinRequest) {
 
@@ -40,17 +40,17 @@ public class UserService {
                 .build();
     }
 
-    public String login(UserLoginRequest userLoginRequest) {
+    public String login(String userName, String password) {
 
-        User user = userRepository.findByUserName(userLoginRequest.getUserName())
+        User user = userRepository.findByUserName(userName)
                 .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND,
-            String.format("%s는 가입된적이 없습니다.", userLoginRequest.getUserName())));
+            String.format("%s는 가입된적이 없습니다.", userName)));
 
         if (!encoder.matches(user.getPassword(), user.getPassword())) {
             throw new UserSnsException(ErrorCode.INVALID_PASSWORD, "비밀번호가 틀렸습니다.");
         }
 
-        String token = JwtTokenUtil.createToken(userLoginRequest.getUserName(), secretKey, expireTimeMS);
+        String token = JwtTokenUtil.createToken("dal", secretKey, expireTimeMS);
         return token;
     }
 }

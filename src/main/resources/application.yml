@@ -17,4 +17,4 @@ spring:
       ddl-auto: update
 jwt:
   token:
-    secret: hello
+    secret: hello.world.ee.ff

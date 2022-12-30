@@ -6,6 +6,7 @@ import com.final_project_leesanghun_team2.domain.response.UserJoinResponse;
 import com.final_project_leesanghun_team2.domain.response.UserLoginResponse;
 import com.final_project_leesanghun_team2.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Response<UserLoginResponse> login(@RequestBody UserLoginRequest dto) {
-        String token = userService.login(dto);
-        return Response.success(new UserLoginResponse(token));
+    public ResponseEntity<Response<UserLoginResponse>> log(@RequestBody UserLoginRequest dto){
+        String token = userService.login(dto.getUserName(), dto.getPassword());
+        return ResponseEntity.ok().body(Response.success(new UserLoginResponse(token)));
     }
 }
