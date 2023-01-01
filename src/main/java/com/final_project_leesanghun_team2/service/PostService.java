@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +46,32 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND, String.format("%d의 포스트가 없습니다.", id)));
         return PostDto.fromEntity(post);
+    }
+
+    @Transactional
+    public Post modify(String userName, Integer postId, String title, String body) {
+        System.out.println("Modify Service Tes1");
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND, String.format("postId is %d", postId)));
+        System.out.println("Modify Post");
+
+
+        System.out.println(userName);
+        User user = userRepository.findByUserName(userName)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND, String.format("%s not founded", userName)));
+
+        Integer userId = user.getId();
+
+        if (!Objects.equals(post.getUser().getId(), userId)) {
+            throw new UserSnsException(ErrorCode.INVALID_PERMISSION, String.format("user %s has no permission with post %d", userId, postId));
+        }
+        System.out.println("test4");
+
+        post.setTitle(title);
+        post.setBody(body);
+        Post savedPost = postRepository.saveAndFlush(post);
+
+        return savedPost;
     }
 
 }

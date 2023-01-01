@@ -1,6 +1,8 @@
 package com.final_project_leesanghun_team2.controller;
 
+import com.final_project_leesanghun_team2.domain.dto.ModifyRequest;
 import com.final_project_leesanghun_team2.domain.dto.PostRequest;
+import com.final_project_leesanghun_team2.domain.entity.Post;
 import com.final_project_leesanghun_team2.domain.response.PostResponse;
 import com.final_project_leesanghun_team2.domain.response.Response;
 import com.final_project_leesanghun_team2.domain.dto.PostDto;
@@ -39,5 +41,14 @@ public class PostController {
     public ResponseEntity<PostDto> findById(@PathVariable Integer postId) {
         PostDto postDto = postService.findByPost(postId);
         return ResponseEntity.ok().body(postDto);
+    }
+
+    @PutMapping("/{id}")    // postid → string으로만 오는 거 같은데 숫자형태로 올 수 없는지
+    public Response<PostResponse> modify(@PathVariable Integer id, @RequestBody ModifyRequest dto, Authentication authentication) {
+        System.out.println("Modify Controller Tes1");
+
+        Post post = postService.modify(authentication.getName(), id, dto.getTitle(), dto.getBody());
+        System.out.println("Modify Controller Tes3");
+        return Response.success(new PostResponse("포스트 수정 완료", post.getId()));
     }
 }
