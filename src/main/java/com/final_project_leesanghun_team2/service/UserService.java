@@ -1,9 +1,6 @@
 package com.final_project_leesanghun_team2.service;
 
 import com.final_project_leesanghun_team2.domain.entity.User;
-import com.final_project_leesanghun_team2.domain.dto.UserDto;
-import com.final_project_leesanghun_team2.domain.dto.UserJoinRequest;
-import com.final_project_leesanghun_team2.domain.dto.UserLoginRequest;
 import com.final_project_leesanghun_team2.exception.ErrorCode;
 import com.final_project_leesanghun_team2.exception.UserSnsException;
 import com.final_project_leesanghun_team2.repository.UserRepository;
@@ -43,11 +40,13 @@ public class UserService {
                 .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND,
             String.format("%s는 가입된적이 없습니다.", userName)));
 
+        User savedUser = User.fromEntity(user);
+
         if (!encoder.matches(password, user.getPassword())) {
             throw new UserSnsException(ErrorCode.INVALID_PASSWORD, "비밀번호가 틀렸습니다.");
         }
 
-        String token = JwtTokenUtil.createToken(user.getUserName(), secretKey, expireTimeMS);
+        String token = JwtTokenUtil.createToken(savedUser.getUserName(), secretKey, expireTimeMS);
         return token;
     }
 }

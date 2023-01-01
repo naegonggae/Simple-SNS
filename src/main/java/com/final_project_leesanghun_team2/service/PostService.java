@@ -1,6 +1,5 @@
 package com.final_project_leesanghun_team2.service;
 
-import com.final_project_leesanghun_team2.domain.dto.PostRequest;
 import com.final_project_leesanghun_team2.domain.entity.Post;
 import com.final_project_leesanghun_team2.domain.dto.PostDto;
 import com.final_project_leesanghun_team2.domain.entity.User;
@@ -92,5 +91,4 @@ public class PostService {
 
         return true;
     }
-
 }
