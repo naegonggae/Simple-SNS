@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Builder

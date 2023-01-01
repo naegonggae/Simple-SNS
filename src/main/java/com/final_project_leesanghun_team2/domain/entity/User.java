@@ -24,4 +24,16 @@ public class User {
         entity.setPassword(encodedPwd);
         return entity;
     }
+
+    public static User fromEntity(User user) {
+        return new User(
+                user.getId(),
+                user.getUserName(),
+                user.getPassword()
+                //user.getRole(),
+                //user.getRegisteredAt(),
+                //user.getUpdatedAt(),
+                //user.getRemovedAt()
+        );
+    }
 }
