@@ -51,7 +51,7 @@ class UserControllerTest {
     @WithMockUser
     void join_success() throws Exception {
 
-        when(userService.join(any())).thenReturn(mock(UserDto.class));
+        //when(userService.join(any(), any())).thenReturn(mock(UserDto.class));
 
         mockMvc.perform(post("/api/v1/user/join")
                     .with(csrf())
@@ -65,7 +65,7 @@ class UserControllerTest {
     @WithMockUser
     void join_fail() throws Exception{
 
-        when(userService.join(any())).thenThrow(new UserSnsException(ErrorCode.DUPLICATED_USER_NAME, ""));
+        when(userService.join(any(), any())).thenThrow(new UserSnsException(ErrorCode.DUPLICATED_USER_NAME, ""));
 
         mockMvc.perform(post("/api/v1/users/join")
                         .with(csrf())

@@ -1,5 +1,6 @@
 package com.final_project_leesanghun_team2.controller;
 
+import com.final_project_leesanghun_team2.domain.entity.User;
 import com.final_project_leesanghun_team2.domain.response.Response;
 import com.final_project_leesanghun_team2.domain.dto.*;
 import com.final_project_leesanghun_team2.domain.response.UserJoinResponse;
@@ -17,16 +18,14 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/join")
-    public Response<UserJoinResponse> join(@RequestBody UserJoinRequest userJoinRequest) {
-        UserDto userDto = userService.join(userJoinRequest);
+    public Response<UserJoinResponse> join(@RequestBody UserJoinRequest userJoinRequest){
+        User user = userService.join(userJoinRequest.getUserName(), userJoinRequest.getPassword());
         UserJoinResponse userJoinResponse = UserJoinResponse.builder()
-                .userId(userDto.getId())
-                .userName(userDto.getUserName())
+                .userId(user.getId())
+                .userName(user.getUserName())
                 .build();
-
         return Response.success(userJoinResponse);
     }
-
     @PostMapping("/login")
     public ResponseEntity<Response<UserLoginResponse>> log(@RequestBody UserLoginRequest userLoginRequest){
         String token = userService.login(userLoginRequest.getUserName(), userLoginRequest.getPassword());

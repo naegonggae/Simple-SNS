@@ -24,20 +24,17 @@ public class UserService {
     private String secretKey;
     private Long expireTimeMS = 1000 * 60 * 60l;
 
-    public UserDto join(UserJoinRequest userJoinRequest) {
+    public User join(String userName, String password){
+        userRepository.findByUserName(userName).ifPresent(
+                user -> {
+                    throw new UserSnsException(ErrorCode.DUPLICATED_USER_NAME, " "+ userName +"는 이미 있습니다.");
+                }
+        );
+        User user = User.of(userName, encoder.encode(password));
 
-        userRepository.findByUserName(userJoinRequest.getUserName())
-                .ifPresent(user ->
-                {throw new UserSnsException(ErrorCode.DUPLICATED_USER_NAME,
-                        String.format("%s는 이미 사용중인 아이디입니다.", userJoinRequest.getUserName()));
-                });
+        User savedUser = userRepository.save(user);
 
-        User savedUser = userRepository.save(userJoinRequest.toEntity(encoder.encode(userJoinRequest.getPassword())));
-
-        return UserDto.builder()
-                .id(savedUser.getId())
-                .userName(savedUser.getUserName())
-                .build();
+        return savedUser;
     }
 
     public String login(String userName, String password) {
