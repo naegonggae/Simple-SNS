@@ -13,6 +13,6 @@ public class ExceptionManger {
     public ResponseEntity<?> userSnsException(UserSnsException e) {
         ErrorResponse errorResponse = new ErrorResponse(e.getErrorCode(), e.getMessage());
         return ResponseEntity.status(e.getErrorCode().getStatus())
-                .body(Response.error("ERROR", errorResponse));
+                .body(Response.error(errorResponse));
     }
 }

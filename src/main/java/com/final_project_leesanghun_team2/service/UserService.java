@@ -24,7 +24,7 @@ public class UserService {
     public User join(String userName, String password){
         userRepository.findByUserName(userName).ifPresent(
                 user -> {
-                    throw new UserSnsException(ErrorCode.DUPLICATED_USER_NAME, " "+ userName +"는 이미 있습니다.");
+                    throw new UserSnsException(ErrorCode.DUPLICATED_USER_NAME, userName +"는 이미 있습니다.");
                 }
         );
         User user = User.of(userName, encoder.encode(password));
