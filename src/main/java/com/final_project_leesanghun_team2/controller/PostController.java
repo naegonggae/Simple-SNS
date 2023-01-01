@@ -51,4 +51,12 @@ public class PostController {
         System.out.println("Modify Controller Tes3");
         return Response.success(new PostResponse("포스트 수정 완료", post.getId()));
     }
+
+    @DeleteMapping("/{postId}")
+    public Response<PostResponse> delete(@PathVariable Integer postId, Authentication authentication) {
+        System.out.println("Delete Controller Tes1");
+
+        postService.delete(authentication.getName(), postId);
+        return Response.success(new PostResponse("포스트 삭제 완료", postId));
+    }
 }

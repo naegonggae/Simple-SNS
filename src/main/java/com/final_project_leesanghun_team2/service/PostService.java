@@ -74,4 +74,23 @@ public class PostService {
         return savedPost;
     }
 
+    @Transactional
+    public boolean delete(String userName, Integer postId) {
+        System.out.println("Delete Service Tes1");
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND, String.format("postId is %d", postId)));
+        System.out.println("Delete Post");
+
+        User user = userRepository.findByUserName(userName)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND, String.format("%s not founded", userName)));
+
+
+        if (!Objects.equals(post.getUser().getUserName(), userName)) {
+            throw new UserSnsException(ErrorCode.INVALID_PERMISSION, String.format("user %s has no permission with post %d", userName, postId)); }
+
+        postRepository.delete(post);
+
+        return true;
+    }
+
 }
