@@ -9,6 +9,8 @@ import com.final_project_leesanghun_team2.exception.UserSnsException;
 import com.final_project_leesanghun_team2.repository.PostRepository;
 import com.final_project_leesanghun_team2.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,4 +34,17 @@ public class PostService {
 
         return postDto;
     }
+
+    public Page<PostDto> getAllPosts(Pageable pageable) {
+        Page<Post> post = postRepository.findAll(pageable);
+        Page<PostDto> postDto = PostDto.toDtoList(post);
+        return postDto;
+    }
+
+    public PostDto findByPost(Integer id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND, String.format("%d의 포스트가 없습니다.", id)));
+        return PostDto.fromEntity(post);
+    }
+
 }

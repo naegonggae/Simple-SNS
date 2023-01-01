@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Entity
 @Getter
 @Setter
-public class Post {
+public class Post extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
