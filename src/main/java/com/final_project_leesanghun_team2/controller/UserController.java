@@ -17,8 +17,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/join")
-    public Response<UserJoinResponse> join(@RequestBody UserJoinRequest dto) {
-        UserDto userDto = userService.join(dto);
+    public Response<UserJoinResponse> join(@RequestBody UserJoinRequest userJoinRequest) {
+        UserDto userDto = userService.join(userJoinRequest);
         UserJoinResponse userJoinResponse = UserJoinResponse.builder()
                 .userId(userDto.getId())
                 .userName(userDto.getUserName())
@@ -28,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Response<UserLoginResponse>> log(@RequestBody UserLoginRequest dto){
-        String token = userService.login(dto.getUserName(), dto.getPassword());
+    public ResponseEntity<Response<UserLoginResponse>> log(@RequestBody UserLoginRequest userLoginRequest){
+        String token = userService.login(userLoginRequest.getUserName(), userLoginRequest.getPassword());
         return ResponseEntity.ok().body(Response.success(new UserLoginResponse(token)));
     }
 }
