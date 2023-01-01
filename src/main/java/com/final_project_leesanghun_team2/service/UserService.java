@@ -50,7 +50,7 @@ public class UserService {
             throw new UserSnsException(ErrorCode.INVALID_PASSWORD, "비밀번호가 틀렸습니다.");
         }
 
-        String token = JwtTokenUtil.createToken("dal", secretKey, expireTimeMS);
+        String token = JwtTokenUtil.createToken(user.getUserName(), secretKey, expireTimeMS);
         return token;
     }
 }

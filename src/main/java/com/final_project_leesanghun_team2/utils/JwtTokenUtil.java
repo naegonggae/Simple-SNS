@@ -8,6 +8,12 @@ import java.util.Date;
 
 public class JwtTokenUtil {
 
+    public static String getUserName(String token, String secretKey) { // JwtTokenFilter에서 꺼낼거야
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
+                .getBody()
+                .get("userName", String.class); //userName을 String으로 꺼낸다.
+    }
+
     public static boolean isExpired(String token, String secretKey) { //Expired == 만료된
         // expired가 지금보다 전에 됐으면 true
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
