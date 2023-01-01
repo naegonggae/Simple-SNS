@@ -32,11 +32,11 @@ public class UserService {
                         String.format("%s는 이미 사용중인 아이디입니다.", userJoinRequest.getUserName()));
                 });
 
-        User savedUSer = userRepository.save(userJoinRequest.toEntity(encoder.encode(userJoinRequest.getPassword())));
+        User savedUser = userRepository.save(userJoinRequest.toEntity(encoder.encode(userJoinRequest.getPassword())));
 
         return UserDto.builder()
-                .id(savedUSer.getId())
-                .userName(savedUSer.getUserName())
+                .id(savedUser.getId())
+                .userName(savedUser.getUserName())
                 .build();
     }
 
@@ -46,7 +46,7 @@ public class UserService {
                 .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND,
             String.format("%s는 가입된적이 없습니다.", userName)));
 
-        if (!encoder.matches(user.getPassword(), user.getPassword())) {
+        if (!encoder.matches(password, user.getPassword())) {
             throw new UserSnsException(ErrorCode.INVALID_PASSWORD, "비밀번호가 틀렸습니다.");
         }
 
