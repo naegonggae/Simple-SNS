@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,6 +17,6 @@ public class PostDto {
     private String title;
     private String body;
     private String userName;
-    private Timestamp created_at;
-    private Timestamp last_modified_at;
+    private LocalDateTime createdAt;
+
 }
