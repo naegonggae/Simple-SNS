@@ -1,9 +1,6 @@
 package com.final_project_leesanghun_team2.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +17,11 @@ public class User {
     private Integer id;
     private String userName;
     private String password;
+
+    public static User of(String userName, String encodedPwd) {
+        User entity = new User();
+        entity.setUserName(userName);
+        entity.setPassword(encodedPwd);
+        return entity;
+    }
 }
