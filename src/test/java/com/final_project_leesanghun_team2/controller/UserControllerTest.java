@@ -2,6 +2,7 @@ package com.final_project_leesanghun_team2.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.final_project_leesanghun_team2.domain.dto.UserJoinRequest;
+import com.final_project_leesanghun_team2.domain.entity.User;
 import com.final_project_leesanghun_team2.exception.ErrorCode;
 import com.final_project_leesanghun_team2.exception.UserSnsException;
 import com.final_project_leesanghun_team2.service.UserService;
@@ -40,19 +41,21 @@ class UserControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    UserJoinRequest userJoinRequest = UserJoinRequest.builder()
-            .userName("sanghun")
-            .password("1234")
-            .build();
-
     @Test
     @DisplayName("회원가입 성공")
     @WithMockUser
     void join_success() throws Exception {
 
-        //when(userService.join(any(), any())).thenReturn(mock(UserDto.class));
+        UserJoinRequest userJoinRequest = new UserJoinRequest("user", "password");
 
-        mockMvc.perform(post("/api/v1/user/join")
+        User user = User.builder()
+                .id(0)
+                .userName(userJoinRequest.getUserName())
+                .build();
+
+        when(userService.join(any(), any())).thenReturn(user);
+
+        mockMvc.perform(post("/api/v1/users/join")
                     .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsBytes(userJoinRequest)))
@@ -63,6 +66,8 @@ class UserControllerTest {
     @DisplayName("회원가입 실패")
     @WithMockUser
     void join_fail() throws Exception{
+
+        UserJoinRequest userJoinRequest = new UserJoinRequest("sanghun", "1234");
 
         when(userService.join(any(), any())).thenThrow(new UserSnsException(ErrorCode.DUPLICATED_USER_NAME, ""));
 
@@ -78,6 +83,9 @@ class UserControllerTest {
     @DisplayName("로그인 성공")
     @WithMockUser
     void login_success() throws Exception {
+
+        UserJoinRequest userJoinRequest = new UserJoinRequest("sanghun", "1234");
+
         when(userService.login(any(), any())).thenReturn("token");
 
         mockMvc.perform(post("/api/v1/users/login")
@@ -95,6 +103,8 @@ class UserControllerTest {
     @WithMockUser
     void login_fail1() throws Exception {
 
+        UserJoinRequest userJoinRequest = new UserJoinRequest("sanghun", "1234");
+
         // id, password 받아서
         when(userService.login(any(), any())).thenThrow(new UserSnsException(ErrorCode.USERNAME_NOT_FOUND, ""));
 
@@ -110,6 +120,8 @@ class UserControllerTest {
     @Test
     @DisplayName("로그인 실패 - password 틀림")
     void login_fail2() throws Exception {
+
+        UserJoinRequest userJoinRequest = new UserJoinRequest("sanghun", "1234");
 
         when(userService.login(any(), any())).thenThrow(new UserSnsException(ErrorCode.INVALID_PASSWORD, ""));
 

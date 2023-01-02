@@ -21,6 +21,7 @@ public class UserService {
     private String secretKey;
     private Long expireTimeMS = 1000 * 60 * 60l;
 
+    // 여기도 UserJoinResponse로 바로 받으면 될텐데 왜 User로 받았을까?
     public User join(String userName, String password){
         userRepository.findByUserName(userName).ifPresent(
                 user -> {

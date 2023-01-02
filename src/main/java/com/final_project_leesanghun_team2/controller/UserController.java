@@ -24,7 +24,7 @@ public class UserController {
                 .userId(user.getId())
                 .userName(user.getUserName())
                 .build();
-        return Response.success(userJoinResponse);
+        return Response.success(userJoinResponse); // 강사님은 왜 User로 받았을까? UserJoinResponse로 바로 받을 수 있을텐데
     }
 
     @PostMapping("/login")
