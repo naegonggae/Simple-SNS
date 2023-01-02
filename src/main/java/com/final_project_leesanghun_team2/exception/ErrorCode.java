@@ -11,7 +11,9 @@ public enum ErrorCode {
     USERNAME_NOT_FOUND(HttpStatus.NOT_FOUND, "Not founded"),
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "패스워드가 잘못되었습니다."),
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "Post not founded"),
-    INVALID_PERMISSION(HttpStatus.UNAUTHORIZED, "User has invalid permission")
+    INVALID_PERMISSION(HttpStatus.UNAUTHORIZED, "User has invalid permission"),
+    DATABASE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Database error occurs"),
+    ALREADY_LIKED(HttpStatus.CONFLICT, "이미 like를 눌렀습니다.")
     ;
 
     private HttpStatus Status;
