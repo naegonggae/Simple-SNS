@@ -1,4 +1,4 @@
-package com.final_project_leesanghun_team2.domain.dto;
+package com.final_project_leesanghun_team2.domain.response;
 
 import com.final_project_leesanghun_team2.domain.entity.Post;
 import lombok.AllArgsConstructor;
@@ -13,15 +13,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class PostDto {
+public class PostGetResponse {
     private Integer id;
     private String title;
     private String body;
     private String userName;
     private LocalDateTime createdAt;
 
-    public static PostDto fromEntity(Post postEntity) {
-        return PostDto.builder()
+    public static PostGetResponse fromEntity(Post postEntity) {
+        return PostGetResponse.builder()
                 .id(postEntity.getId())
                 .title(postEntity.getTitle())
                 .body(postEntity.getBody())
@@ -31,8 +31,8 @@ public class PostDto {
     }
 
     /* Page<Entity> -> Page<Dto> 변환처리 */
-    public static Page<PostDto> toDtoList(Page<Post> postEntities){
-        Page<PostDto> postDtoList = postEntities.map(m -> PostDto.builder()
+    public static Page<PostGetResponse> toDtoList(Page<Post> postEntities){
+        Page<PostGetResponse> postDtoList = postEntities.map(m -> PostGetResponse.builder()
                 .id(m.getId())
                 .title(m.getTitle())
                 .body(m.getBody())
