@@ -8,11 +8,13 @@ import lombok.Getter;
 public class UserSnsException extends RuntimeException {
 
     private ErrorCode errorCode;
-    private String message;
-
+    //private String message;
+/*
     @Override
     public String toString() {
         if (message == null) return errorCode.getMessage();
         return String.format("%s, %s", errorCode.getMessage(), message);
     }
+
+ */
 }

@@ -25,7 +25,7 @@ public class PostService {
     @Transactional
     public PostDto writePost(String title, String body, String userName) {
         User user = userRepository.findByUserName(userName)
-                .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND, String.format("%s not founded", userName)));
+                .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND));
         Post savedPostEntity = postRepository.save(Post.of(title, body, user));
 
         PostDto postDto = PostDto.builder()
@@ -43,7 +43,7 @@ public class PostService {
 
     public PostDto findByPost(Integer id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND, String.format("%d의 포스트가 없습니다.", id)));
+                .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND));
         return PostDto.fromEntity(post);
     }
 
@@ -51,18 +51,18 @@ public class PostService {
     public Post modify(String userName, Integer postId, String title, String body) {
         System.out.println("Modify Service Tes1");
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND, String.format("postId is %d", postId)));
+                .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND));
         System.out.println("Modify Post");
 
 
         System.out.println(userName);
         User user = userRepository.findByUserName(userName)
-                .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND, String.format("%s not founded", userName)));
+                .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND));
 
         Integer userId = user.getId();
 
         if (!Objects.equals(post.getUser().getId(), userId)) {
-            throw new UserSnsException(ErrorCode.INVALID_PERMISSION, String.format("user %s has no permission with post %d", userId, postId));
+            throw new UserSnsException(ErrorCode.INVALID_PERMISSION);
         }
         System.out.println("test4");
 
@@ -77,15 +77,15 @@ public class PostService {
     public boolean delete(String userName, Integer postId) {
         System.out.println("Delete Service Tes1");
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND, String.format("postId is %d", postId)));
+                .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND));
         System.out.println("Delete Post");
 
         User user = userRepository.findByUserName(userName)
-                .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND, String.format("%s not founded", userName)));
+                .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND));
 
 
         if (!Objects.equals(post.getUser().getUserName(), userName)) {
-            throw new UserSnsException(ErrorCode.INVALID_PERMISSION, String.format("user %s has no permission with post %d", userName, postId)); }
+            throw new UserSnsException(ErrorCode.INVALID_PERMISSION); }
 
         postRepository.delete(post);
 

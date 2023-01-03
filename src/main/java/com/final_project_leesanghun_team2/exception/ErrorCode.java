@@ -13,9 +13,12 @@ public enum ErrorCode {
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "Post not founded"),
     INVALID_PERMISSION(HttpStatus.UNAUTHORIZED, "User has invalid permission"),
     DATABASE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Database error occurs"),
-    ALREADY_LIKED(HttpStatus.CONFLICT, "이미 like를 눌렀습니다.")
-    ;
+    INVALID_TOKEN(HttpStatus.UNAUTHORIZED,"잘못된 토큰입니다.");
 
     private HttpStatus Status;
     private String message;
+
+    public ErrorResponse getErrorResult(){
+        return new ErrorResponse(this, this.message);
+    }
 }
