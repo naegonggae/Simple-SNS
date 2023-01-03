@@ -3,7 +3,7 @@ package com.final_project_leesanghun_team2.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.final_project_leesanghun_team2.configuration.SecurityConfiguration;
 import com.final_project_leesanghun_team2.domain.dto.ModifyRequest;
-import com.final_project_leesanghun_team2.domain.dto.PostDto;
+import com.final_project_leesanghun_team2.domain.response.PostGetResponse;
 import com.final_project_leesanghun_team2.domain.dto.PostRequest;
 import com.final_project_leesanghun_team2.domain.entity.Post;
 import com.final_project_leesanghun_team2.exception.ErrorCode;
@@ -56,7 +56,7 @@ class PostControllerTest {
     @DisplayName("포스트 조회 성공")
     void post_read_success() throws Exception {
 
-        PostDto post = PostDto.builder()
+        PostGetResponse post = PostGetResponse.builder()
                 .id(1)
                 .title("This is a post.")
                 .body("This is the body.")
@@ -110,7 +110,7 @@ class PostControllerTest {
         PostRequest postRequest = new PostRequest("title_post", "body_post");
 
         when(postService.writePost(any(), any(), any()))
-                .thenReturn(PostDto.builder()
+                .thenReturn(PostGetResponse.builder()
                         .id(0)
                         .build());
 

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -14,6 +15,7 @@ import java.sql.Timestamp;
 public class Post extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Integer id;
     private String title;
     private String body;
@@ -21,6 +23,10 @@ public class Post extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(fetch = FetchType.LAZY) // comment랑 양방향이였어
+    @JoinColumn(name = "post_id")
+    private List<Comment> comments;
 
     public static Post of(String title, String body, User user) {
         Post entity = new Post();

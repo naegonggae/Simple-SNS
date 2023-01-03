@@ -1,13 +1,17 @@
 package com.final_project_leesanghun_team2.service;
 
+import com.final_project_leesanghun_team2.domain.entity.Comment;
 import com.final_project_leesanghun_team2.domain.entity.Post;
-import com.final_project_leesanghun_team2.domain.dto.PostDto;
+import com.final_project_leesanghun_team2.domain.response.CommentResponse;
+import com.final_project_leesanghun_team2.domain.response.PostGetResponse;
 import com.final_project_leesanghun_team2.domain.entity.User;
 import com.final_project_leesanghun_team2.exception.ErrorCode;
 import com.final_project_leesanghun_team2.exception.UserSnsException;
+import com.final_project_leesanghun_team2.repository.CommentRepository;
 import com.final_project_leesanghun_team2.repository.PostRepository;
 import com.final_project_leesanghun_team2.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,34 +21,36 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
-    public PostDto writePost(String title, String body, String userName) {
+    public PostGetResponse writePost(String title, String body, String userName) {
         User user = userRepository.findByUserName(userName)
                 .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND));
         Post savedPostEntity = postRepository.save(Post.of(title, body, user));
 
-        PostDto postDto = PostDto.builder()
+        PostGetResponse postGetResponse = PostGetResponse.builder()
                 .id(savedPostEntity.getId())
                 .build();
 
-        return postDto;
+        return postGetResponse;
     }
 
-    public Page<PostDto> getAllPosts(Pageable pageable) {
+    public Page<PostGetResponse> getAllPosts(Pageable pageable) {
         Page<Post> post = postRepository.findAll(pageable);
-        Page<PostDto> postDto = PostDto.toDtoList(post);
+        Page<PostGetResponse> postDto = PostGetResponse.toDtoList(post);
         return postDto;
     }
 
-    public PostDto findByPost(Integer id) {
+    public PostGetResponse findByPost(Integer id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND));
-        return PostDto.fromEntity(post);
+        return PostGetResponse.fromEntity(post);
     }
 
     @Transactional
@@ -90,5 +96,23 @@ public class PostService {
         postRepository.delete(post);
 
         return true;
+    }
+
+    @Transactional
+    public Comment write(String comment, String userName, Integer postsId) {
+        Post post = postRepository.findById(postsId)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND));
+        log.info("postsId:{}", postsId);
+
+        User user = userRepository.findByUserName(userName)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND));
+        log.info("userName:{}", userName);
+
+        Comment savedComment = commentRepository.save(Comment.of(comment, user, post));
+        log.info("comment:{}, user:{}, post:{}", comment, user, post);
+
+        //CommentResponse commentResponse = CommentResponse.fromComment(savedComment);
+
+        return savedComment;
     }
 }
