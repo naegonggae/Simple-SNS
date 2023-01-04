@@ -2,12 +2,18 @@ package com.final_project_leesanghun_team2.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.final_project_leesanghun_team2.configuration.SecurityConfiguration;
+import com.final_project_leesanghun_team2.domain.dto.CommentRequest;
 import com.final_project_leesanghun_team2.domain.dto.ModifyRequest;
+import com.final_project_leesanghun_team2.domain.entity.Comment;
+import com.final_project_leesanghun_team2.domain.entity.User;
+import com.final_project_leesanghun_team2.domain.response.CommentResponse;
 import com.final_project_leesanghun_team2.domain.response.PostGetResponse;
 import com.final_project_leesanghun_team2.domain.dto.PostRequest;
 import com.final_project_leesanghun_team2.domain.entity.Post;
 import com.final_project_leesanghun_team2.exception.ErrorCode;
 import com.final_project_leesanghun_team2.exception.UserSnsException;
+import com.final_project_leesanghun_team2.fixture.PostEntityFixture;
+import com.final_project_leesanghun_team2.fixture.UserEntityFixture;
 import com.final_project_leesanghun_team2.service.PostService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +21,7 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -68,14 +75,17 @@ class PostControllerTest {
                 .thenReturn(post);
 
         mockMvc.perform(get("/api/v1/posts/1")
-                        .with(csrf()))
-                .andDo(print())
-                .andExpect(status().isOk())
+                        .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(post)))
+
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.title").exists())
                 .andExpect(jsonPath("$.userName").exists())
                 .andExpect(jsonPath("$.createdAt").exists())
-                .andExpect(jsonPath("$.body").exists());
+                .andExpect(jsonPath("$.body").exists())
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
 
@@ -133,7 +143,7 @@ class PostControllerTest {
         PostRequest postRequest = new PostRequest("title_post", "body_post");
 
         when(postService.writePost(any(), any(), any()))
-                .thenThrow(new UserSnsException(ErrorCode.INVALID_PERMISSION, ""));
+                .thenThrow(new UserSnsException(ErrorCode.INVALID_PERMISSION));
 
         mockMvc.perform(post("/api/v1/posts")
                         .with(csrf())
@@ -181,7 +191,7 @@ class PostControllerTest {
                 .build();
 
         when(postService.modify(any(), any(), any(), any()))
-                .thenThrow(new UserSnsException(ErrorCode.INVALID_PERMISSION, ""));
+                .thenThrow(new UserSnsException(ErrorCode.INVALID_PERMISSION));
 
         mockMvc.perform(put("/api/v1/posts/1")
                         .with(csrf())
@@ -202,7 +212,7 @@ class PostControllerTest {
                 .build();
 
         when(postService.modify(any(), any(), any(), any()))
-                .thenThrow(new UserSnsException(ErrorCode.POST_NOT_FOUND, ""));
+                .thenThrow(new UserSnsException(ErrorCode.POST_NOT_FOUND));
 
         mockMvc.perform(put("/api/v1/posts/1")
                         .with(csrf())
@@ -223,7 +233,7 @@ class PostControllerTest {
                 .build();
 
         when(postService.modify(any(), any(), any(), any()))
-                .thenThrow(new UserSnsException(ErrorCode.INVALID_PERMISSION, ""));
+                .thenThrow(new UserSnsException(ErrorCode.INVALID_PERMISSION));
 
         mockMvc.perform(put("/api/v1/posts/1")
                         .with(csrf())
@@ -244,7 +254,7 @@ class PostControllerTest {
                 .build();
 
         when(postService.modify(any(), any(), any(), any()))
-                .thenThrow(new UserSnsException(ErrorCode.DATABASE_ERROR, ""));
+                .thenThrow(new UserSnsException(ErrorCode.DATABASE_ERROR));
 
         mockMvc.perform(put("/api/v1/posts/1")
                         .with(csrf())
@@ -274,7 +284,7 @@ class PostControllerTest {
     void delete_fail1() throws Exception {
 
         when(postService.delete(any(), any()))
-                .thenThrow(new UserSnsException(ErrorCode.INVALID_PERMISSION, ""));
+                .thenThrow(new UserSnsException(ErrorCode.INVALID_PERMISSION));
 
         mockMvc.perform(delete("/api/v1/posts/1")
                         .with(csrf())
@@ -289,7 +299,7 @@ class PostControllerTest {
     void delete_fail2() throws Exception {
 
         when(postService.delete(any(), any()))
-                .thenThrow(new UserSnsException(ErrorCode.POST_NOT_FOUND, ""));
+                .thenThrow(new UserSnsException(ErrorCode.POST_NOT_FOUND));
 
         mockMvc.perform(delete("/api/v1/posts/1")
                         .with(csrf())
@@ -304,7 +314,7 @@ class PostControllerTest {
     void delete_fail3() throws Exception {
 
         when(postService.delete(any(), any()))
-                .thenThrow(new UserSnsException(ErrorCode.INVALID_PERMISSION, ""));
+                .thenThrow(new UserSnsException(ErrorCode.INVALID_PERMISSION));
 
         mockMvc.perform(delete("/api/v1/posts/1")
                         .with(csrf())
@@ -319,7 +329,7 @@ class PostControllerTest {
     void delete_fail4() throws Exception {
 
         when(postService.delete(any(), any()))
-                .thenThrow(new UserSnsException(ErrorCode.DATABASE_ERROR, ""));
+                .thenThrow(new UserSnsException(ErrorCode.DATABASE_ERROR));
 
         mockMvc.perform(delete("/api/v1/posts/1")
                         .with(csrf())
@@ -328,4 +338,130 @@ class PostControllerTest {
                 .andExpect(status().is(ErrorCode.DATABASE_ERROR.getStatus().value()));
     }
 
+    @Test
+    @WithMockUser   // 인증된 상태
+    @DisplayName("댓글 작성 성공")
+    void comment_success() throws Exception {
+
+        CommentRequest commentRequest = new CommentRequest("comment");
+
+        User user = UserEntityFixture.get("test", "test");
+        Post post = PostEntityFixture.get("test", "test");
+
+        Comment comment = Comment.builder()
+                .comment(commentRequest.getComment())
+                .id(1)
+                .user(user)
+                .post(post)
+                .build();
+        comment.setCreatedAt(LocalDateTime.now());
+
+        when(postService.write(any(), any(), any())).thenReturn(comment);
+
+        mockMvc.perform(post("/api/v1/posts/1/comments")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(commentRequest)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result.id").exists())
+                .andExpect(jsonPath("$.result.comment").exists())
+                .andExpect(jsonPath("$.result.userName").exists())
+                .andExpect(jsonPath("$.result.postId").exists())
+                .andExpect(jsonPath("$.result.createdAt").exists())
+        ;
+    }
+
+    @Test
+    @WithMockUser   // 인증된 상태
+    @DisplayName("댓글 작성 실패 - 로그인하지 않은 경우")
+    void comment_fail1() throws Exception {
+
+        CommentRequest commentRequest = new CommentRequest("comment");
+
+        User user = UserEntityFixture.get("test", "test");
+        Post post = PostEntityFixture.get("test", "test");
+
+        Comment comment = Comment.builder()
+                .comment(commentRequest.getComment())
+                .id(1)
+                .user(user)
+                .post(post)
+                .build();
+        comment.setCreatedAt(LocalDateTime.now());
+
+        when(postService.write(any(), any(), any())).thenThrow(new UserSnsException(ErrorCode.USERNAME_NOT_FOUND));
+
+        mockMvc.perform(post("/api/v1/posts/1/comments")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(commentRequest)))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+        ;
+    }
+
+    @Test
+    @WithMockUser   // 인증된 상태
+    @DisplayName("댓글 작성 실패 - 게시물이 존재하지 않은 경우")
+    void comment_fail2() throws Exception {
+
+        CommentRequest commentRequest = new CommentRequest("comment");
+
+        User user = UserEntityFixture.get("test", "test");
+        Post post = PostEntityFixture.get("test", "test");
+
+        Comment comment = Comment.builder()
+                .comment(commentRequest.getComment())
+                .id(1)
+                .user(user)
+                .post(post)
+                .build();
+        comment.setCreatedAt(LocalDateTime.now());
+
+        when(postService.write(any(), any(), any())).thenThrow(new UserSnsException(ErrorCode.POST_NOT_FOUND));
+
+        mockMvc.perform(post("/api/v1/posts/1/comments")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(commentRequest)))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+        ;
+    }
+
+    @Test
+    @WithMockUser   // 인증된 상태
+    @DisplayName("댓글 조회 성공")
+    void getAllComment_success() throws Exception {
+
+        CommentRequest commentRequest = new CommentRequest("comment");
+
+        User user = UserEntityFixture.get("test", "test");
+        Post post = PostEntityFixture.get("test", "test");
+
+        Comment comment = Comment.builder()
+                .comment(commentRequest.getComment())
+                .id(1)
+                .user(user)
+                .post(post)
+                .build();
+        comment.setCreatedAt(LocalDateTime.now());
+
+        when(postService.allComment(any(), any())).thenReturn(Page.empty());
+
+
+        mockMvc.perform(get("/api/v1/posts/1/comments")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(commentRequest)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result.id").exists())
+                .andExpect(jsonPath("$.result.comment").exists())
+                .andExpect(jsonPath("$.result.userName").exists())
+                .andExpect(jsonPath("$.result.postId").exists())
+                .andExpect(jsonPath("$.result.createdAt").exists())
+        ;
+    }
 }
