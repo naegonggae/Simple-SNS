@@ -34,16 +34,16 @@ public class PostController {
     }
 
     @GetMapping
-    public Response<Page<PostGetResponse>> getAllPosts(@PageableDefault(size = 20)
+    public ResponseEntity<Response<Page<PostGetResponse>>> getAllPosts(@PageableDefault(size = 20)
                                                @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable) {
         Page<PostGetResponse> postDto = postService.getAllPosts(pageable);
-        return Response.success(postDto);
+        return ResponseEntity.ok().body(Response.success(postDto));
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<PostGetResponse> findById(@PathVariable Integer postId) {
+    public ResponseEntity<Response<PostGetResponse>> findById(@PathVariable Integer postId) {
         PostGetResponse postGetResponse = postService.findByPost(postId);
-        return ResponseEntity.ok().body(postGetResponse);
+        return ResponseEntity.ok().body(Response.success(postGetResponse));
     }
 
     @PutMapping("/{id}")    // postid → string으로만 오는 거 같은데 숫자형태로 올 수 없는지
