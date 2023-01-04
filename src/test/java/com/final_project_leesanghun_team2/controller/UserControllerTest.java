@@ -46,21 +46,20 @@ class UserControllerTest {
     @WithMockUser
     void join_success() throws Exception {
 
-        UserJoinRequest userJoinRequest = new UserJoinRequest("user", "password");
+        UserJoinRequest userJoinRequest = new UserJoinRequest("sanghun", "1234");
 
-        User user = User.builder()
-                .id(0)
-                .userName(userJoinRequest.getUserName())
-                .build();
+        User user = new User(0, userJoinRequest.getUserName(), userJoinRequest.getPassword());
 
-        when(userService.join(any(), any())).thenReturn(user);
+
+        when(userService.join(any(), any())).thenReturn(user); // 서비스를 실행시켰을때 결과값을 정해준다. 서비스 테스트가아니니까
+        // 여기도 실패이면 thenThrow해줘야함
 
         mockMvc.perform(post("/api/v1/users/join")
-                    .with(csrf())
+                    .with(csrf()) // security test 추가 후 넣어줘야함
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsBytes(userJoinRequest)))
+                .content(objectMapper.writeValueAsBytes(userJoinRequest))) // userJoinRequest를 json형태로 변경해시켜서 위의 url로 보내줌
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk()); // 성공이면 isOk, 아니면 에러 출력
     }
     @Test
     @DisplayName("회원가입 실패")
@@ -69,7 +68,7 @@ class UserControllerTest {
 
         UserJoinRequest userJoinRequest = new UserJoinRequest("sanghun", "1234");
 
-        when(userService.join(any(), any())).thenThrow(new UserSnsException(ErrorCode.DUPLICATED_USER_NAME, ""));
+        when(userService.join(any(), any())).thenThrow(new UserSnsException(ErrorCode.DUPLICATED_USER_NAME));
 
         mockMvc.perform(post("/api/v1/users/join")
                         .with(csrf())
@@ -106,7 +105,7 @@ class UserControllerTest {
         UserJoinRequest userJoinRequest = new UserJoinRequest("sanghun", "1234");
 
         // id, password 받아서
-        when(userService.login(any(), any())).thenThrow(new UserSnsException(ErrorCode.USERNAME_NOT_FOUND, ""));
+        when(userService.login(any(), any())).thenThrow(new UserSnsException(ErrorCode.USERNAME_NOT_FOUND));
 
         // NOT_FOUND 받으면 잘한것이다.
         mockMvc.perform(post("/api/v1/users/login")
@@ -123,7 +122,7 @@ class UserControllerTest {
 
         UserJoinRequest userJoinRequest = new UserJoinRequest("sanghun", "1234");
 
-        when(userService.login(any(), any())).thenThrow(new UserSnsException(ErrorCode.INVALID_PASSWORD, ""));
+        when(userService.login(any(), any())).thenThrow(new UserSnsException(ErrorCode.INVALID_PASSWORD));
 
         // NOT_FOUND 받으면 잘한것이다.
         mockMvc.perform(post("/api/v1/users/login")
