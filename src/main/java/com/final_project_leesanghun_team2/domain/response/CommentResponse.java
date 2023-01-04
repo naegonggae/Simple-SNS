@@ -1,10 +1,12 @@
 package com.final_project_leesanghun_team2.domain.response;
 
 import com.final_project_leesanghun_team2.domain.entity.Comment;
+import com.final_project_leesanghun_team2.domain.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 @Builder
@@ -18,18 +20,6 @@ public class CommentResponse {
     private Integer postId;
     private LocalDateTime createdAt;
     //private LocalDateTime lastModifiedAt;
-/*
-    public static CommentResponse fromEntity(Comment entity) {
-        return new CommentResponse(
-                entity.getId(),
-                entity.getComment(),
-                entity.getUser().getUserName(),
-                entity.getPost().getId(),
-                entity.getCreatedAt()
-        );
-    }
-
- */
 
     public static CommentResponse fromComment(Comment comment){
         return new CommentResponse(
@@ -41,4 +31,17 @@ public class CommentResponse {
                 //comment.getLastModifiedAt()
         );
     }
+/*
+    public static Page<CommentResponse> toCommentResponse(Page<Comment> comments) {
+        Page<CommentResponse> toCommentResponse = comments.map(m -> CommentResponse.builder()
+                .id(m.getId())
+                .comment(m.getComment())
+                .userName(m.getUser().getUserName())
+                .postId(m.getPost().getId())
+                .createdAt(m.getCreatedAt())
+                .build());
+        return toCommentResponse;
+    }
+
+ */
 }
