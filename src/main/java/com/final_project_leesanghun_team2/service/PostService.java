@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -115,4 +116,22 @@ public class PostService {
 
         return savedComment;
     }
+
+    public Page<Comment> allComment(Pageable pageable, Integer id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND));
+
+        //Page<Comment> comments = commentRepository.findAll(pageable);
+        //Page<CommentResponse> commentResponses = CommentResponse.toCommentResponse(comments);
+        return commentRepository.findAllByPost(post, pageable);
+    }
+
+/*
+    public Page<PostGetResponse> getAllPosts(Pageable pageable) {
+        Page<> post = postRepository.findAll(pageable);
+        Page<PostGetResponse> postDto = PostGetResponse.toDtoList(post);
+        return postDto;
+    }
+
+ */
 }

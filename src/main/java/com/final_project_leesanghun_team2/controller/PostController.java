@@ -10,6 +10,7 @@ import com.final_project_leesanghun_team2.domain.response.PostResponse;
 import com.final_project_leesanghun_team2.domain.response.Response;
 import com.final_project_leesanghun_team2.domain.response.PostGetResponse;
 import com.final_project_leesanghun_team2.service.PostService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -70,4 +72,25 @@ public class PostController {
 
         return Response.success(commentResponse);
     }
+
+    //CommentResponse >
+    @GetMapping("/{postsId}/comments")
+    public ResponseEntity<Response<Page<CommentResponse>>> getAllComment(@PathVariable Integer postsId,
+                                                                             @PageableDefault(size = 10)
+                                                                             @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<CommentResponse> commentResponses = postService.allComment(pageable, postsId)
+                .map(comment -> CommentResponse.fromComment(comment));
+        return ResponseEntity.ok().body(Response.success(commentResponses));
+    }
+/*
+
+    @GetMapping
+    public ResponseEntity<Response<Page<PostGetResponse>>> getAllPosts(@PageableDefault(size = 20)
+                                                                       @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<PostGetResponse> postDto = postService.getAllPosts(pageable);
+        return ResponseEntity.ok().body(Response.success(postDto));
+    }
+
+ */
 }
