@@ -1,14 +1,12 @@
 package com.final_project_leesanghun_team2.controller;
 
+import com.final_project_leesanghun_team2.domain.dto.CommentModifyRequest;
 import com.final_project_leesanghun_team2.domain.dto.CommentRequest;
 import com.final_project_leesanghun_team2.domain.dto.ModifyRequest;
 import com.final_project_leesanghun_team2.domain.dto.PostRequest;
 import com.final_project_leesanghun_team2.domain.entity.Comment;
 import com.final_project_leesanghun_team2.domain.entity.Post;
-import com.final_project_leesanghun_team2.domain.response.CommentResponse;
-import com.final_project_leesanghun_team2.domain.response.PostResponse;
-import com.final_project_leesanghun_team2.domain.response.Response;
-import com.final_project_leesanghun_team2.domain.response.PostGetResponse;
+import com.final_project_leesanghun_team2.domain.response.*;
 import com.final_project_leesanghun_team2.service.PostService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -83,14 +81,16 @@ public class PostController {
                 .map(comment -> CommentResponse.fromComment(comment));
         return ResponseEntity.ok().body(Response.success(commentResponses));
     }
-/*
 
-    @GetMapping
-    public ResponseEntity<Response<Page<PostGetResponse>>> getAllPosts(@PageableDefault(size = 20)
-                                                                       @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<PostGetResponse> postDto = postService.getAllPosts(pageable);
-        return ResponseEntity.ok().body(Response.success(postDto));
+    @PutMapping("/{postsId}/comments/{id}")
+    public Response<CommentModifyResponse> modifyComment(@PathVariable Integer postsId,
+                                                         @PathVariable Integer id,
+                                                         @RequestBody CommentModifyRequest commentModifyRequest,
+                                                         Authentication authentication) {
+        Comment comment = postService.modifyComments(commentModifyRequest.getComment(), authentication.getName(), postsId, id);
+        CommentModifyResponse commentModifyResponse = CommentModifyResponse.from(comment);
+
+
+        return Response.success(commentModifyResponse);
     }
-
- */
 }
