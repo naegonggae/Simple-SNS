@@ -126,12 +126,26 @@ public class PostService {
         return commentRepository.findAllByPost(post, pageable);
     }
 
-/*
-    public Page<PostGetResponse> getAllPosts(Pageable pageable) {
-        Page<> post = postRepository.findAll(pageable);
-        Page<PostGetResponse> postDto = PostGetResponse.toDtoList(post);
-        return postDto;
-    }
+    public Comment modifyComments(String comment, String userName, Integer postsId, Integer id) {
+        Post post = postRepository.findById(postsId)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND));
 
- */
+
+        User user = userRepository.findByUserName(userName)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND));
+
+        Integer userId = user.getId();
+
+        if (!Objects.equals(post.getUser().getId(), userId)) {
+            throw new UserSnsException(ErrorCode.INVALID_PERMISSION);
+        }
+
+        Comment commentEntity = commentRepository.findById(id)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.COMMENT_NOT_FOUND));
+
+        commentEntity.setComment(comment);
+        Comment savedComment = commentRepository.saveAndFlush(commentEntity);
+
+        return savedComment;
+    }
 }

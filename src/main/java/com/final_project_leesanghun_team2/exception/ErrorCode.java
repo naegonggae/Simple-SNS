@@ -13,7 +13,8 @@ public enum ErrorCode {
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "Post not founded"),
     INVALID_PERMISSION(HttpStatus.UNAUTHORIZED, "User has invalid permission"),
     DATABASE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Database error occurs"),
-    INVALID_TOKEN(HttpStatus.UNAUTHORIZED,"잘못된 토큰입니다.");
+    INVALID_TOKEN(HttpStatus.UNAUTHORIZED,"잘못된 토큰입니다."),
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Comment not founded");
 
     private HttpStatus Status;
     private String message;

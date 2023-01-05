@@ -22,6 +22,20 @@ public class CommentResponse {
     //private LocalDateTime lastModifiedAt;
 
     public static CommentResponse fromComment(Comment comment){
+        return CommentResponse.builder()
+                .id(comment.getId())
+                .comment(comment.getComment())
+                .userName(comment.getUser().getUserName())
+                .postId(comment.getPost().getId())
+                .createdAt(comment.getCreatedAt())
+                .build();
+    }
+
+
+    /*
+
+
+    public static CommentResponse fromComment(Comment comment){
         return new CommentResponse(
                 comment.getId(),
                 comment.getComment(),
@@ -31,7 +45,7 @@ public class CommentResponse {
                 //comment.getLastModifiedAt()
         );
     }
-/*
+
     public static Page<CommentResponse> toCommentResponse(Page<Comment> comments) {
         Page<CommentResponse> toCommentResponse = comments.map(m -> CommentResponse.builder()
                 .id(m.getId())
