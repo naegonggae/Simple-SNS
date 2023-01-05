@@ -93,4 +93,13 @@ public class PostController {
 
         return Response.success(commentModifyResponse);
     }
+
+    @DeleteMapping("/{postsId}/comments/{id}")
+    public Response<CommentDeleteResponse> deleteComment(@PathVariable Integer postsId,
+                                                  @PathVariable Integer id,
+                                                  Authentication authentication) {
+        postService.deleteComments(postsId, authentication.getName(), id);
+
+        return Response.success(new CommentDeleteResponse("댓글 삭제 완료", id));
+    }
 }

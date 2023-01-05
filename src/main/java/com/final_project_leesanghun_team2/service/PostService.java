@@ -126,6 +126,7 @@ public class PostService {
         return commentRepository.findAllByPost(post, pageable);
     }
 
+    @Transactional
     public Comment modifyComments(String comment, String userName, Integer postsId, Integer id) {
         Post post = postRepository.findById(postsId)
                 .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND));
@@ -147,5 +148,25 @@ public class PostService {
         Comment savedComment = commentRepository.saveAndFlush(commentEntity);
 
         return savedComment;
+    }
+
+    @Transactional
+    public boolean deleteComments(Integer postId, String userName, Integer id) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND));
+
+        User user = userRepository.findByUserName(userName)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND));
+
+
+        if (!Objects.equals(post.getUser().getUserName(), userName)) {
+            throw new UserSnsException(ErrorCode.INVALID_PERMISSION); }
+
+        Comment commentEntity = commentRepository.findById(id)
+                .orElseThrow(() -> new UserSnsException(ErrorCode.COMMENT_NOT_FOUND));
+
+        commentRepository.delete(commentEntity);
+
+        return true;
     }
 }
