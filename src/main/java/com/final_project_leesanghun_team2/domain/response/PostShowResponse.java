@@ -13,15 +13,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class PostGetResponse {
+public class PostShowResponse {
     private Integer id;
     private String title;
     private String body;
     private String userName;
     private LocalDateTime createdAt;
 
-    public static PostGetResponse fromEntity(Post postEntity) {
-        return PostGetResponse.builder()
+    public static PostShowResponse fromEntity(Post postEntity) {
+        return PostShowResponse.builder()
                 .id(postEntity.getId())
                 .title(postEntity.getTitle())
                 .body(postEntity.getBody())
@@ -31,8 +31,8 @@ public class PostGetResponse {
     }
 
     /* Page<Entity> -> Page<Dto> 변환처리 */
-    public static Page<PostGetResponse> toDtoList(Page<Post> postEntities){
-        Page<PostGetResponse> postDtoList = postEntities.map(m -> PostGetResponse.builder()
+    public static Page<PostShowResponse> toDtoList(Page<Post> postEntities){
+        Page<PostShowResponse> postDtoList = postEntities.map(m -> PostShowResponse.builder()
                 .id(m.getId())
                 .title(m.getTitle())
                 .body(m.getBody())
@@ -41,4 +41,6 @@ public class PostGetResponse {
                 .build());
         return postDtoList;
     }
+
+
 }

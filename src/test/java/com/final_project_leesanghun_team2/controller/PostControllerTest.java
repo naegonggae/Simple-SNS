@@ -2,48 +2,19 @@ package com.final_project_leesanghun_team2.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.final_project_leesanghun_team2.configuration.SecurityConfiguration;
-import com.final_project_leesanghun_team2.domain.request.CommentModifyRequest;
-import com.final_project_leesanghun_team2.domain.request.CommentRequest;
-import com.final_project_leesanghun_team2.domain.request.ModifyRequest;
-import com.final_project_leesanghun_team2.domain.entity.Comment;
-import com.final_project_leesanghun_team2.domain.entity.User;
-import com.final_project_leesanghun_team2.domain.response.PostGetResponse;
-import com.final_project_leesanghun_team2.domain.request.PostRequest;
-import com.final_project_leesanghun_team2.domain.entity.Post;
-import com.final_project_leesanghun_team2.exception.ErrorCode;
-import com.final_project_leesanghun_team2.exception.UserSnsException;
-import com.final_project_leesanghun_team2.fixture.PostEntityFixture;
-import com.final_project_leesanghun_team2.fixture.UserEntityFixture;
 import com.final_project_leesanghun_team2.service.PostService;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithAnonymousUser;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(PostController.class)
+@WebMvcTest(PostRestController.class)
 class PostControllerTest {
 
     @Autowired
@@ -63,7 +34,7 @@ class PostControllerTest {
     @DisplayName("포스트 조회 성공")
     void post_read_success() throws Exception {
 
-        PostGetResponse post = PostGetResponse.builder()
+        PostShowResponse post = PostShowResponse.builder()
                 .id(1)
                 .title("This is a post.")
                 .body("This is the body.")
@@ -117,10 +88,10 @@ class PostControllerTest {
     @DisplayName("포스트 작성 성공")
     void post_success() throws Exception {
 
-        PostRequest postRequest = new PostRequest("title_post", "body_post");
+        PostAddRequest postRequest = new PostAddRequest("title_post", "body_post");
 
         when(postService.writePost(any(), any(), any()))
-                .thenReturn(PostGetResponse.builder()
+                .thenReturn(PostShowResponse.builder()
                         .id(0)
                         .build());
 
@@ -140,7 +111,7 @@ class PostControllerTest {
     @DisplayName("포스트 작성 실패(1) : 인증 실패")
     void post_fail1() throws Exception {
 
-        PostRequest postRequest = new PostRequest("title_post", "body_post");
+        PostAddRequest postRequest = new PostAddRequest("title_post", "body_post");
 
         when(postService.writePost(any(), any(), any()))
                 .thenThrow(new UserSnsException(ErrorCode.INVALID_PERMISSION));
