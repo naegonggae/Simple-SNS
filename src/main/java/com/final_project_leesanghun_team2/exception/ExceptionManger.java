@@ -1,6 +1,6 @@
 package com.final_project_leesanghun_team2.exception;
 
-import com.final_project_leesanghun_team2.domain.response.Response;
+import com.final_project_leesanghun_team2.domain.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

@@ -2,7 +2,7 @@ package com.final_project_leesanghun_team2.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.final_project_leesanghun_team2.exception.ErrorResponse;
-import com.final_project_leesanghun_team2.domain.response.Response;
+import com.final_project_leesanghun_team2.domain.Response;
 import com.final_project_leesanghun_team2.exception.ErrorCode;
 import com.final_project_leesanghun_team2.exception.UserSnsException;
 import lombok.extern.slf4j.Slf4j;

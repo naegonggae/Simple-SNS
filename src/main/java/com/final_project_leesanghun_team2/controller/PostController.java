@@ -1,14 +1,14 @@
 package com.final_project_leesanghun_team2.controller;
 
-import com.final_project_leesanghun_team2.domain.dto.CommentModifyRequest;
-import com.final_project_leesanghun_team2.domain.dto.CommentRequest;
-import com.final_project_leesanghun_team2.domain.dto.ModifyRequest;
-import com.final_project_leesanghun_team2.domain.dto.PostRequest;
+import com.final_project_leesanghun_team2.domain.Response;
+import com.final_project_leesanghun_team2.domain.request.CommentModifyRequest;
+import com.final_project_leesanghun_team2.domain.request.CommentRequest;
+import com.final_project_leesanghun_team2.domain.request.ModifyRequest;
+import com.final_project_leesanghun_team2.domain.request.PostRequest;
 import com.final_project_leesanghun_team2.domain.entity.Comment;
 import com.final_project_leesanghun_team2.domain.entity.Post;
 import com.final_project_leesanghun_team2.domain.response.*;
 import com.final_project_leesanghun_team2.service.PostService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +17,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

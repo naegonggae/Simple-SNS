@@ -1,4 +1,4 @@
-package com.final_project_leesanghun_team2.domain.dto;
+package com.final_project_leesanghun_team2.domain.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

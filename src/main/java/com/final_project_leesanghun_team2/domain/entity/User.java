@@ -1,13 +1,17 @@
 package com.final_project_leesanghun_team2.domain.entity;
 
+import com.final_project_leesanghun_team2.domain.UserRole;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-@Builder
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
 public class User {
@@ -18,22 +22,88 @@ public class User {
     private String userName;
     private String password;
 
-    public static User of(String userName, String encodedPwd) {
-        User entity = new User();
-        entity.setUserName(userName);
-        entity.setPassword(encodedPwd);
-        return entity;
+    @CreatedDate
+    private String registeredAt;
+
+    @LastModifiedDate
+    private String updatedAt;
+
+    private LocalDateTime removedAt;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role = UserRole.USER;
+
+    @PrePersist
+    public void onPrePersist() {
+        this.registeredAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.updatedAt = this.registeredAt;
     }
 
-    public static User fromEntity(User user) {
+    @PreUpdate
+    public void onPreUpdate() {
+        this.updatedAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    // userName, password -> userName, 복호화된 암호 형태로 사용
+    public static User of(String userName, String encodedPw) {
         return new User(
-                user.getId(),
-                user.getUserName(),
-                user.getPassword()
-                //user.getRole(),
-                //user.getRegisteredAt(),
-                //user.getUpdatedAt(),
-                //user.getRemovedAt()
+                userName,
+                encodedPw
         );
     }
+
+    // 위에꺼 쓰려고 만들어 놓은것
+    public User(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
 }
+/*
+
+    @Builder
+    public PostsDTO(Long id, String title, String body, String userName, String createdAt, String lastModifiedAt) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.userName = userName;
+        this.createdAt = createdAt;
+        this.lastModifiedAt = lastModifiedAt;
+    }
+    // factory에서 사용
+    public static PostsDTO of(Posts posts) {
+        return PostsDTO.builder()
+                .id(posts.getId())
+                .title(posts.getTitle())
+                .body(posts.getBody())
+                .userName(posts.getUsers().getUserName())
+                .createdAt(posts.getCreatedAt())
+                .lastModifiedAt(posts.getLastModifiedAt())
+                .build();
+    }
+
+    public static PostsResponse of(Long resultPostId) {
+        return new PostsResponse(
+                resultPostId
+                , "포스트 등록 완료");
+    }
+
+    public static Posts of(PostsAddRequest postsAddRequest, Users loginUser) {
+        return new Posts(
+                postsAddRequest.getBody()
+                , postsAddRequest.getTitle()
+                , loginUser);
+    }
+
+    public static Users of(String userName, String encodePassword) {
+        return new Users(
+                userName,
+                encodePassword);
+    }
+
+    public static UserJoinResponse of(Users userJoinResult) {
+    return new UserJoinResponse(
+            userJoinResult.getId(),
+            userJoinResult.getUserName()
+    );
+
+ */
