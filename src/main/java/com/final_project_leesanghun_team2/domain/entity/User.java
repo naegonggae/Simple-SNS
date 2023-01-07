@@ -1,7 +1,6 @@
 package com.final_project_leesanghun_team2.domain.entity;
 
 import com.final_project_leesanghun_team2.domain.UserRole;
-import com.final_project_leesanghun_team2.domain.request.UserJoinRequest;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -61,8 +60,7 @@ public class User {
         this.password = password;
     }
 }
-/*
-
+/* 빌더 사용예시
     @Builder
     public PostsDTO(Long id, String title, String body, String userName, String createdAt, String lastModifiedAt) {
         this.id = id;
@@ -72,7 +70,6 @@ public class User {
         this.createdAt = createdAt;
         this.lastModifiedAt = lastModifiedAt;
     }
-    // factory에서 사용
     public static PostsDTO of(Posts posts) {
         return PostsDTO.builder()
                 .id(posts.getId())
@@ -83,30 +80,4 @@ public class User {
                 .lastModifiedAt(posts.getLastModifiedAt())
                 .build();
     }
-
-    public static PostsResponse of(Long resultPostId) {
-        return new PostsResponse(
-                resultPostId
-                , "포스트 등록 완료");
-    }
-
-    public static Posts of(PostsAddRequest postsAddRequest, Users loginUser) {
-        return new Posts(
-                postsAddRequest.getBody()
-                , postsAddRequest.getTitle()
-                , loginUser);
-    }
-
-    public static Users of(String userName, String encodePassword) {
-        return new Users(
-                userName,
-                encodePassword);
-    }
-
-    public static UserJoinResponse of(Users userJoinResult) {
-    return new UserJoinResponse(
-            userJoinResult.getId(),
-            userJoinResult.getUserName()
-    );
-
  */

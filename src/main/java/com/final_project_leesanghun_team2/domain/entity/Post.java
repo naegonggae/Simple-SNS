@@ -38,7 +38,15 @@ public class Post extends BaseEntity{
         this.body = body;
         this.user = user;
     }
+/*
+    public static Post of(String title, String body) {
+        Post post = new Post();
+        post.setTitle(title);
+        post.setBody(body);
+        return post;
+    }
 
+ */
     /* 포스트 수정할때도 이렇게 메소드 사용하고 싶었는데 못하겠다. ;수정된 title, body 세팅하는거
     public static Post from(String title, String body) {
         return new Post(

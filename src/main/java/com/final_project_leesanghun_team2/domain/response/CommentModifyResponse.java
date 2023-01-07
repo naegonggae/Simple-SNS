@@ -20,14 +20,14 @@ public class CommentModifyResponse {
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
 
-    public static CommentModifyResponse from(Comment comment){
-        return CommentModifyResponse.builder()
-                .id(comment.getId())
-                .comment(comment.getComment())
-                .userName(comment.getUser().getUserName())
-                .postId(comment.getPost().getId())
-                .createdAt(comment.getCreatedAt())
-                .lastModifiedAt(comment.getLastModifiedAt())
-                .build();
+    public static CommentModifyResponse ofModify(Comment comment){
+        return new CommentModifyResponse(
+                comment.getId(),
+                comment.getComment(),
+                comment.getUser().getUserName(),
+                comment.getPost().getId(),
+                comment.getCreatedAt(),
+                comment.getLastModifiedAt()
+        );
     }
 }

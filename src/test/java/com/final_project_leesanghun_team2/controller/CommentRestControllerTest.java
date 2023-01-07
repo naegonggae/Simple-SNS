@@ -32,7 +32,7 @@ class CommentRestControllerTest {
     @DisplayName("댓글 작성 성공")
     void comment_success() throws Exception {
 
-        CommentRequest commentRequest = new CommentRequest("comment");
+        CommentAddRequest commentRequest = new CommentAddRequest("comment");
 
         User user = UserEntityFixture.get("test", "test");
         Post post = PostEntityFixture.get("test", "test");
@@ -66,7 +66,7 @@ class CommentRestControllerTest {
     @DisplayName("댓글 작성 실패 - 로그인하지 않은 경우")
     void comment_fail1() throws Exception {
 
-        CommentRequest commentRequest = new CommentRequest("comment");
+        CommentAddRequest commentRequest = new CommentAddRequest("comment");
 
         User user = UserEntityFixture.get("test", "test");
         Post post = PostEntityFixture.get("test", "test");
@@ -95,7 +95,7 @@ class CommentRestControllerTest {
     @DisplayName("댓글 작성 실패 - 게시물이 존재하지 않은 경우")
     void comment_fail2() throws Exception {
 
-        CommentRequest commentRequest = new CommentRequest("comment");
+        CommentAddRequest commentRequest = new CommentAddRequest("comment");
 
         User user = UserEntityFixture.get("test", "test");
         Post post = PostEntityFixture.get("test", "test");
@@ -124,7 +124,7 @@ class CommentRestControllerTest {
     @DisplayName("댓글 조회 성공")
     void getAllComment_success() throws Exception {
 
-        CommentRequest commentRequest = new CommentRequest("comment");
+        CommentAddRequest commentRequest = new CommentAddRequest("comment");
 
         User user = UserEntityFixture.get("test", "test");
         Post post = PostEntityFixture.get("test", "test");

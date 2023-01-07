@@ -1,7 +1,6 @@
 package com.final_project_leesanghun_team2.domain.entity;
 
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,7 +19,6 @@ public class Comment extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "comment")
     private String comment;
 
     @ManyToOne
@@ -31,14 +29,21 @@ public class Comment extends BaseEntity{
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @Column(name = "deleted_at")
     private LocalDateTime deleteAt;
 
+    // 댓글 작성할때 저장정보 포장
     public static Comment of(String comment, User user, Post post) {
-        Comment entity = new Comment();
-        entity.setComment(comment);
-        entity.setUser(user);
-        entity.setPost(post);
-        return entity;
+        return new Comment(
+                comment,
+                user,
+                post
+        );
+    }
+
+    // 위에꺼 하려고 생성
+    public Comment(String comment, User user, Post post) {
+        this.comment = comment;
+        this.user = user;
+        this.post = post;
     }
 }

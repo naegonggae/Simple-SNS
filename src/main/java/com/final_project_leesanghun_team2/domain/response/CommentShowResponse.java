@@ -13,30 +13,40 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class CommentResponse {
+public class CommentShowResponse {
     private Integer id;
     private String comment;
     private String userName;
     private Integer postId;
     private LocalDateTime createdAt;
-    //private LocalDateTime lastModifiedAt;
 
-    public static CommentResponse fromComment(Comment comment){
-        return CommentResponse.builder()
-                .id(comment.getId())
-                .comment(comment.getComment())
-                .userName(comment.getUser().getUserName())
-                .postId(comment.getPost().getId())
-                .createdAt(comment.getCreatedAt())
-                .build();
+    public static CommentShowResponse of(Comment comment){
+        return new CommentShowResponse(
+                comment.getId(),
+                comment.getComment(),
+                comment.getUser().getUserName(),
+                comment.getPost().getId(),
+                comment.getCreatedAt()
+        );
+    }
+
+    public static Page<CommentShowResponse> toList(Page<Comment> comments){
+        Page<CommentShowResponse> commentShowResponsePage = comments.map(m -> CommentShowResponse.builder() // 이게 뭐야...
+                .id(m.getId())
+                .comment(m.getComment())
+                .userName(m.getUser().getUserName())
+                .postId(m.getPost().getId())
+                .createdAt(m.getCreatedAt())
+                .build());
+        return commentShowResponsePage;
     }
 
 
     /*
 
 
-    public static CommentResponse fromComment(Comment comment){
-        return new CommentResponse(
+    public static CommentShowResponse fromComment(Comment comment){
+        return new CommentShowResponse(
                 comment.getId(),
                 comment.getComment(),
                 comment.getUser().getUserName(),
@@ -46,8 +56,8 @@ public class CommentResponse {
         );
     }
 
-    public static Page<CommentResponse> toCommentResponse(Page<Comment> comments) {
-        Page<CommentResponse> toCommentResponse = comments.map(m -> CommentResponse.builder()
+    public static Page<CommentShowResponse> toCommentResponse(Page<Comment> comments) {
+        Page<CommentShowResponse> toCommentResponse = comments.map(m -> CommentShowResponse.builder()
                 .id(m.getId())
                 .comment(m.getComment())
                 .userName(m.getUser().getUserName())

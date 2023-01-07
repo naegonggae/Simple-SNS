@@ -47,11 +47,10 @@ public class PostService {
     public Page<PostShowResponse> showAll(Pageable pageable) {
 
         // DB에 정보? 모두 가져오기
-        Page<Post> post = postRepository.findAll(pageable);
+        Page<Post> posts = postRepository.findAll(pageable);
 
         // PostShowResponse 리스트에 DB에서 찾아온 Post 리스트자료를 각각 대입
-        Page<PostShowResponse> postShowResponse = PostShowResponse.toList(post);
-        return postShowResponse;
+        return PostShowResponse.toList(posts);
     }
 
     /** 포스트 1개 조회 **/
