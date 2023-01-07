@@ -1,11 +1,9 @@
 package com.final_project_leesanghun_team2.domain.entity;
 
-import com.final_project_leesanghun_team2.domain.request.PostAddRequest;
+import com.final_project_leesanghun_team2.domain.request.PostModifyRequest;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -40,4 +38,17 @@ public class Post extends BaseEntity{
         this.body = body;
         this.user = user;
     }
+
+    /* 포스트 수정할때도 이렇게 메소드 사용하고 싶었는데 못하겠다. ;수정된 title, body 세팅하는거
+    public static Post from(String title, String body) {
+        return new Post(
+                title,
+                body
+        );
+    }
+    public Post(String title, String body) {
+        setTitle(title);
+        setBody(body);
+    }
+     */
 }

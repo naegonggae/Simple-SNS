@@ -45,7 +45,7 @@ public class User {
         this.updatedAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-    // userName, password -> userName, 복호화된 암호 형태로 사용
+    // 회원가입할때 userName, password -> userName, encodedPw 로 포장
     public static User of(String userName, String encodedPw) {
         // Q: 파라미터를 객체로 선언하는게 좋을까? 기본참조형으로 하는게 좋을까?
         // A: 기본참조형으로 가자. 아이디도 비밀번호처럼 커스텀 될 수 있으니까 유지보수 좋게하기 위해 후자로 ㄱㄱ

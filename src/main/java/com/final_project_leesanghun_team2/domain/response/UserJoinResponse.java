@@ -14,7 +14,7 @@ public class UserJoinResponse {
     private Integer userId;
     private String userName;
 
-    // User 를 UserJoinResponse 형태로 변경
+    // 회원가입할때 User -> UserJoinResponse 로 포장
     public static UserJoinResponse of(User user) {
         return new UserJoinResponse(
                 user.getId(),

@@ -129,7 +129,7 @@ class PostControllerTest {
     @DisplayName("포스트 수정 성공")
     void modify_success() throws Exception {
 
-        ModifyRequest modifyRequest = ModifyRequest.builder()
+        PostModifyRequest modifyRequest = PostModifyRequest.builder()
                 .title("title_modify")
                 .body("body_modify")
                 .build();
@@ -156,7 +156,7 @@ class PostControllerTest {
     @DisplayName("포스트 수정 실패(1) : 인증 실패")
     void modify_fail1() throws Exception {
 
-        ModifyRequest modifyRequest = ModifyRequest.builder()
+        PostModifyRequest modifyRequest = PostModifyRequest.builder()
                 .title("title_modify")
                 .body("body_modify")
                 .build();
@@ -177,7 +177,7 @@ class PostControllerTest {
     @DisplayName("포스트 수정 실패(2) : 포스트 내용 불일치")
     void modify_fail2() throws Exception {
 
-        ModifyRequest modifyRequest = ModifyRequest.builder()
+        PostModifyRequest modifyRequest = PostModifyRequest.builder()
                 .title("title_modify")
                 .body("body_modify")
                 .build();
@@ -198,7 +198,7 @@ class PostControllerTest {
     @DisplayName("포스트 수정 실패(3) : 작성자 불일치")
     void modify_fail3() throws Exception {
 
-        ModifyRequest modifyRequest = ModifyRequest.builder()
+        PostModifyRequest modifyRequest = PostModifyRequest.builder()
                 .title("title_modify")
                 .body("body_modify")
                 .build();
@@ -219,7 +219,7 @@ class PostControllerTest {
     @DisplayName("포스트 수정 실패(4) : 데이터베이스 에러")
     void modify_fail4() throws Exception {
 
-        ModifyRequest modifyRequest = ModifyRequest.builder()
+        PostModifyRequest modifyRequest = PostModifyRequest.builder()
                 .title("title_modify")
                 .body("body_modify")
                 .build();

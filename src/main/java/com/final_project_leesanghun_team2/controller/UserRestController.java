@@ -19,14 +19,13 @@ public class UserRestController {
     @PostMapping("/join")
     public Response<UserJoinResponse> join(@RequestBody UserJoinRequest userJoinRequest){
         return Response.success(userService.join(userJoinRequest));
-        // Q: 파라미터가 구성을 직관적으로 보이게 짜는게 좋을까? 아니면 객체로 받는게 좋을까?
+        // Q: 파라미터 구성을 직관적으로 보이게 짜는게 좋을까? 아니면 객체로 받는게 좋을까?
         // A: 객체로 받고 추가할거 하면될듯.
     }
 
     /** 로그인 **/
     @PostMapping("/login")
     public Response<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest){
-        UserLoginResponse token = userService.login(userLoginRequest);
-        return Response.success(token);
+        return Response.success(userService.login(userLoginRequest));
     }
 }

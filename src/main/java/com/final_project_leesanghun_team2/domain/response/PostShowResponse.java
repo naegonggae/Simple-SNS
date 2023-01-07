@@ -20,19 +20,20 @@ public class PostShowResponse {
     private String userName;
     private LocalDateTime createdAt;
 
-    public static PostShowResponse fromEntity(Post postEntity) {
-        return PostShowResponse.builder()
-                .id(postEntity.getId())
-                .title(postEntity.getTitle())
-                .body(postEntity.getBody())
-                .userName(postEntity.getUser().getUserName())
-                .createdAt(postEntity.getCreatedAt())
-                .build();
+    // 포스트 1개 조회할때 Post -> PostShowResponse 로 포장
+    public static PostShowResponse of(Post post) {
+        return new PostShowResponse(
+                post.getId(),
+                post.getTitle(),
+                post.getBody(),
+                post.getUser().getUserName(),
+                post.getCreatedAt()
+        );
     }
 
-    /* Page<Entity> -> Page<Dto> 변환처리 */
-    public static Page<PostShowResponse> toDtoList(Page<Post> postEntities){
-        Page<PostShowResponse> postDtoList = postEntities.map(m -> PostShowResponse.builder()
+    // 포스트 리스트 조회할때 Page<Entity> -> Page<Dto> 로 포장
+    public static Page<PostShowResponse> toList(Page<Post> post){
+        Page<PostShowResponse> postDtoList = post.map(m -> PostShowResponse.builder() // 이게 뭐야...
                 .id(m.getId())
                 .title(m.getTitle())
                 .body(m.getBody())
@@ -41,6 +42,4 @@ public class PostShowResponse {
                 .build());
         return postDtoList;
     }
-
-
 }
