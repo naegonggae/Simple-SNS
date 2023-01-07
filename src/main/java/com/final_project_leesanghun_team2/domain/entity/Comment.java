@@ -5,10 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Builder
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
 @Table(name = "comment", indexes = {
@@ -31,7 +30,7 @@ public class Comment extends BaseEntity{
 
     private LocalDateTime deleteAt;
 
-    // 댓글 작성할때 저장정보 포장
+    // 댓글 등록할때 저장정보 포장
     public static Comment of(String comment, User user, Post post) {
         return new Comment(
                 comment,

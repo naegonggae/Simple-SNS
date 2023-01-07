@@ -10,7 +10,7 @@ public class CommentDeleteResponse {
     private String message;
     private Integer id;
 
-    // Comment -> CommentDeleteResponse 으로 포장
+    // 댓글 삭제할때 Comment -> CommentDeleteResponse 으로 포장
     public static CommentDeleteResponse of(Comment comment) {
         return new CommentDeleteResponse(
                 "댓글 삭제 완료",

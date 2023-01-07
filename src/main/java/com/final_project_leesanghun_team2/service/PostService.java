@@ -31,7 +31,7 @@ public class PostService {
     @Transactional
     public PostResultResponse add(PostAddRequest postAddRequest, Authentication authentication) {
 
-        // userName 있는지 체크
+        // UserName 정보 유무 체크
         User user = userRepository.findByUserName(authentication.getName())
                 .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND));
 
@@ -46,7 +46,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public Page<PostShowResponse> showAll(Pageable pageable) {
 
-        // DB에 정보? 모두 가져오기
+        // 포스트 전부 가져오기
         Page<Post> posts = postRepository.findAll(pageable);
 
         // PostShowResponse 리스트에 DB에서 찾아온 Post 리스트자료를 각각 대입
@@ -57,11 +57,11 @@ public class PostService {
     @Transactional(readOnly = true)
     public PostShowResponse showOne(Integer postId) {
 
-        // postId의 포스트 찾기
+        // 해당 postId의 포스트 유무 체크
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND));
 
-        // PostShowResponse 형태로 포장
+        // Post -> PostShowResponse 로 포장
         return PostShowResponse.of(post);
     }
 
@@ -69,11 +69,11 @@ public class PostService {
     @Transactional
     public PostResultResponse modify(Integer postId, PostModifyRequest postModifyRequest, Authentication authentication) {
 
-        // postId의 포스트가 있는가
+        // 해당 postId의 포스트 유무 체크
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND));
 
-        // UserName 이 있는가
+        // UserName 정보 유무 체크
         User user = userRepository.findByUserName(authentication.getName())
                 .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND));
 
@@ -98,11 +98,11 @@ public class PostService {
     @Transactional
     public PostResultResponse delete(Integer postId, Authentication authentication) {
 
-        // postId의 포스트가 있는가
+        // 해당 postId의 포스트 유무 체크
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new UserSnsException(ErrorCode.POST_NOT_FOUND));
 
-        // UserName 이 있는가
+        // UserName 정보 유무 체크
         User user = userRepository.findByUserName(authentication.getName())
                 .orElseThrow(() -> new UserSnsException(ErrorCode.USERNAME_NOT_FOUND));
 

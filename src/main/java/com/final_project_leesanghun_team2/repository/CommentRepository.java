@@ -9,5 +9,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
     Page<Comment> findAllByPost(Post post, Pageable pageable);
     // 이거 어떻게 만드는건데
-
 }

@@ -20,6 +20,7 @@ public class CommentModifyResponse {
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
 
+    // 댓글 수정할때 Comment -> CommentModifyResponse 로 변경
     public static CommentModifyResponse ofModify(Comment comment){
         return new CommentModifyResponse(
                 comment.getId(),

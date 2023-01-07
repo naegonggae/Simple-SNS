@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor // 이게 뭐길래 추가했다고 되는거지.. https://moonsiri.tistory.com/104
+@NoArgsConstructor // 이거 안해주면 왜 오류날까 Bad Request 400
 @AllArgsConstructor
 @Getter
 public class CommentModifyRequest {

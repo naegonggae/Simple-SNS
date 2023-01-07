@@ -1,7 +1,6 @@
 package com.final_project_leesanghun_team2.controller;
 
 import com.final_project_leesanghun_team2.domain.Response;
-import com.final_project_leesanghun_team2.domain.entity.Comment;
 import com.final_project_leesanghun_team2.domain.request.CommentAddRequest;
 import com.final_project_leesanghun_team2.domain.request.CommentModifyRequest;
 import com.final_project_leesanghun_team2.domain.response.CommentDeleteResponse;
@@ -31,8 +30,6 @@ public class CommentRestController {
                                                     Authentication authentication) {
         return Response.success(commentService.add(postsId, commentAddRequest, authentication));
     }
-
-
 
     /** 댓글 조회 **/
     @GetMapping("/{postsId}/comments")
