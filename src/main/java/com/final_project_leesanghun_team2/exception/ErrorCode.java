@@ -14,7 +14,9 @@ public enum ErrorCode {
     INVALID_PERMISSION(HttpStatus.UNAUTHORIZED, "사용자가 권한이 없습니다."),
     DATABASE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "DB에러"),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED,"잘못된 토큰입니다."),
-    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Comment not founded");
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Comment not founded"),
+
+    ALREADY_LIKED(HttpStatus.CONFLICT, "이미 like를 눌렀습니다.");
 
     private HttpStatus Status;
     private String message;

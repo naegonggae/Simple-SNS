@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor//(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
 @Table(name = "comment", indexes = {

@@ -9,14 +9,15 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class UserEntityFixture {
-/*
+
     public static User get(String userName, String password) {
         User user = new User();
         user.setId(1);
         user.setUserName(userName);
         user.setPassword(password);
-
-        user.setRegisteredAt(LocalDateTime.from(Instant.now()));
+        user.setRegisteredAt(null);
+        user.setUpdatedAt(null);
+        user.setRegisteredAt(null);
         user.setRole(UserRole.USER);
         return user;
     }
@@ -24,12 +25,10 @@ public class UserEntityFixture {
     public static User getUser(String userName, String password) {
         User user = new User();
         user.setId(1);
-        //user.setUsername(userName);
+        user.setUserName(userName);
         user.setPassword(password);
-        //user.setRole(UserRole.USER);
-        //user.setRegisteredAt(Timestamp.from(Instant.now()));
+        user.setRole(UserRole.USER);
+        user.setRegisteredAt(null);
         return user;
     }
-
- */
 }

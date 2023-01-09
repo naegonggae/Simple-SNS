@@ -4,9 +4,10 @@ import com.final_project_leesanghun_team2.domain.request.PostModifyRequest;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor//(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
 @Setter
@@ -19,9 +20,12 @@ public class Post extends BaseEntity{
     private String title;
     private String body;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+
+
 
     // 포스트 등록할때 필요정보 DB에 저장
     public static Post of(String title, String body, User user) {

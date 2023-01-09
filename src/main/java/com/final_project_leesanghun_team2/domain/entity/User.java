@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor//(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
 public class User {
