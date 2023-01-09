@@ -8,6 +8,8 @@ import com.final_project_leesanghun_team2.domain.response.PostShowResponse;
 import com.final_project_leesanghun_team2.domain.entity.User;
 import com.final_project_leesanghun_team2.exception.ErrorCode;
 import com.final_project_leesanghun_team2.exception.UserSnsException;
+import com.final_project_leesanghun_team2.repository.CommentRepository;
+import com.final_project_leesanghun_team2.repository.LikesRepository;
 import com.final_project_leesanghun_team2.repository.PostRepository;
 import com.final_project_leesanghun_team2.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class PostService {
 
+    private final LikesRepository likesRepository;
+    private final CommentRepository commentRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
@@ -110,7 +114,9 @@ public class PostService {
         if (!Objects.equals(post.getUser().getUserName(), authentication.getName())) {
             throw new UserSnsException(ErrorCode.INVALID_PERMISSION); }
 
-        // 해당 postId의 포스트 삭제하기
+        // 해당 postId의 포스트 삭제하기 // 포스트 삭제시 해당 글의 댓글과 좋아요 삭제처리
+        likesRepository.deleteAllByPost(post);
+        commentRepository.deleteAllByPost(post);
         postRepository.delete(post);
 
         return PostResultResponse.ofDeletePost(post.getId());

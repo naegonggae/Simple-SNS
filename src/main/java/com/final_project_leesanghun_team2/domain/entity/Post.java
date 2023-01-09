@@ -24,8 +24,13 @@ public class Post extends BaseEntity{
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private List<Comment> comments;
 
-
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private List<Likes> likes;
 
     // 포스트 등록할때 필요정보 DB에 저장
     public static Post of(String title, String body, User user) {

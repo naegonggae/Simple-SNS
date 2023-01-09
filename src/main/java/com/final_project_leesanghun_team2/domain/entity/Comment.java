@@ -28,7 +28,8 @@ public class Comment extends BaseEntity{
     @JoinColumn(name = "post_id")
     private Post post;
 
-    private LocalDateTime deleteAt;
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
     // 댓글 등록할때 저장정보 포장
     public static Comment of(String comment, User user, Post post) {
