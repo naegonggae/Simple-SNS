@@ -27,12 +27,12 @@ JavaSpringBoot, SpringSecurity, MySQL, Docker, AmazonEC2
 ### 📋 기술 스택
 
 -------
-| <center>언어</center> | <center>Java 11</center> |
+| 언어 | Java 11 |
 |:-------------------:|:------------------------:|
 |   **SpringBoot**    |        **2.7.5**         |
-|       **DB**        |       MySQL 8.0.31       |
-|       **빌드**        |        Gradle 7.4        |
-|       **서버**        |        Amazon EC2        |
+|       **DB**        |       **MySQL 8.0.31**       |
+|       **빌드**        |        **Gradle 7.4**        |
+|       **서버**        |        **Amazon EC2**        |
 
 <br/>
 
@@ -40,7 +40,7 @@ JavaSpringBoot, SpringSecurity, MySQL, Docker, AmazonEC2
 
 ------
 
-|              | <center>기능</center> | <center>주소</center>                      |
+|              | 기능 | 주소 |
 |:------------:|:-------------------:|:-----------------------------------------|
 |   **Post**   |      **회원가입**       | **api/v1/users/join**                    |
 |   **Post**   |       **로그인**       | **api/v1/users/login**                   |
@@ -62,7 +62,7 @@ JavaSpringBoot, SpringSecurity, MySQL, Docker, AmazonEC2
 ### ❗️ Error Code
 
 ------
-| **에러 코드**                     | 설명                     |
+| **에러 코드** | 설명 |
 |:------------------------------|:-----------------------|
 | **DUPLICATED_USER_NAME**      | **UserName이 중복됩니다.**   |
 | **USERNAME_NOT_FOUND**        | **해당 UserName이 없습니다.** |
