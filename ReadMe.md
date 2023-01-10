@@ -27,12 +27,12 @@ JavaSpringBoot, SpringSecurity, MySQL, Docker, AmazonEC2
 ### 📋 기술 스택
 
 -------
-| 언어 | Java 11 |
-|:-------------------:|:------------------------:|
-|   **SpringBoot**    |        **2.7.5**         |
-|       **DB**        |       **MySQL 8.0.31**       |
-|       **빌드**        |        **Gradle 7.4**        |
-|       **서버**        |        **Amazon EC2**        |
+| 언어                 | Java 11                     |
+|:-------------------|:----------------------------|
+| **SpringBoot**     | **2.7.5**                   |
+| **DB**             | **MySQL 8.0.31**            |
+| **빌드**             | **Gradle 7.4**              |
+| **서버**             | **Amazon EC2**              |
 
 <br/>
 
@@ -40,22 +40,22 @@ JavaSpringBoot, SpringSecurity, MySQL, Docker, AmazonEC2
 
 ------
 
-|              | 기능 | 주소 |
-|:------------:|:-------------------:|:-----------------------------------------|
-|   **Post**   |      **회원가입**       | **api/v1/users/join**                    |
-|   **Post**   |       **로그인**       | **api/v1/users/login**                   |
-|   **Post**   |     **Post 작성**     | **api/v1/posts**                         |
-|   **Get**    |     **Post 조회**     | **api/v1/posts**                         |
-|   **Get**    |   **Post 1개 조회**    | **api/v1/posts/{postId}**                |
-|   **Put**    |     **Post 수정**     | **api/v1/posts/{id}**                    |
-|  **Delete**  |     **Post 삭제**     | **api/v1/posts/{postId}**                |
-|   **Post**   |      **댓글 작성**      | **api/v1/posts/{postsId}/comments**      |
-|   **Get**    |      **댓글 조회**      | **api/v1/posts/{postsId}/comments**      |
-|   **Put**    |      **댓글 수정**      | **api/v1/posts/{postsId}/comments/{id}** |
-|  **Delete**  |      **댓글 삭제**      | **api/v1/posts/{postsId}/comments/{id}** |
-|   **Post**   |     **좋아요 누르기**     | **api/v1/posts/{postId}/likes**          |
-|   **Get**    |     **좋아요 조회**      | **api/v1/posts/{postId}/likes**          |
-|   **Get**    |     **마이피드 조회**     | **api/v1/posts/my**                      |
+|             | 기능                 | 주소 |
+|:------------|:-------------------|:-----------------------------------------|
+| **Post**    | **회원가입**           | **api/v1/users/join**                    |
+| **Post**    | **로그인**            | **api/v1/users/login**                   |
+| **Post**    | **Post 작성**        | **api/v1/posts**                         |
+| **Get**     | **Post 조회**        | **api/v1/posts**                         |
+| **Get**     | **Post 1개 조회**     | **api/v1/posts/{postId}**                |
+| **Put**     | **Post 수정**        | **api/v1/posts/{id}**                    |
+| **Delete**  | **Post 삭제**        | **api/v1/posts/{postId}**                |
+| **Post**    | **댓글 작성**          | **api/v1/posts/{postsId}/comments**      |
+| **Get**     | **댓글 조회**          | **api/v1/posts/{postsId}/comments**      |
+| **Put**     | **댓글 수정**          | **api/v1/posts/{postsId}/comments/{id}** |
+| **Delete**  | **댓글 삭제**          | **api/v1/posts/{postsId}/comments/{id}** |
+| **Post**    | **좋아요 누르기**        | **api/v1/posts/{postId}/likes**          |
+| **Get**     | **좋아요 조회**         | **api/v1/posts/{postId}/likes**          |
+| **Get**     | **마이피드 조회**        | **api/v1/posts/my**                      |
 
 <br/>
 
