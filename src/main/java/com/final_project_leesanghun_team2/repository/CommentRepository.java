@@ -20,5 +20,5 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     @Transactional
     @Modifying
     @Query("UPDATE Comment comment SET deleted_at = NOW() where comment.post = :post")
-    void deleteAllByPost(@Param("post") Post post);
+    void deleteAllByPost(@Param("post") Post post); // soft delete
 }

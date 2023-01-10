@@ -121,4 +121,16 @@ public class PostService {
 
         return PostResultResponse.ofDeletePost(post.getId());
     }
+
+    /** 마이페이지 조회 **/
+    public Page<PostShowResponse> showMy(Pageable pageable, Authentication authentication) {
+
+        // UserName 정보 유무 체크
+        User user = userRepository.findByUserName(authentication.getName()).orElseThrow(() ->
+                new UserSnsException(ErrorCode.USERNAME_NOT_FOUND));
+
+        // postRepository 에 저장되어있는 user 정보들 Page<> 형태로 가져오기
+        return postRepository.findAllByUser(user, pageable).map(PostShowResponse::of);
+        // x -> PostShowResponse.of 이거를 줄인듯
+    }
 }

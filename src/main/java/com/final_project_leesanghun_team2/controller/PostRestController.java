@@ -54,4 +54,13 @@ public class PostRestController {
     public Response<PostResultResponse> delete(@PathVariable Integer postId, Authentication authentication) {
         return Response.success(postService.delete(postId, authentication));
     }
+
+    /** 마이페이지 조회 **/
+    @GetMapping("/my")
+    public Response<Page<PostShowResponse>> showMyPosts(
+                                @PageableDefault(size = 20)
+                                @SortDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+                                Authentication authentication) {
+        return Response.success(postService.showMy(pageable, authentication));
+    }
 }
