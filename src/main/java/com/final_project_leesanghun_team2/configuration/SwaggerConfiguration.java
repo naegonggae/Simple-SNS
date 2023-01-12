@@ -24,6 +24,7 @@ public class SwaggerConfiguration {
                 .securitySchemes(Arrays.asList(apiKey()))
                 .select()
                 .apis(RequestHandlerSelectors.any())
+                //.apis(RequestHandlerSelectors.basePackage("[controller 경로]")
                 .paths(PathSelectors.any())
                 .build();
     }

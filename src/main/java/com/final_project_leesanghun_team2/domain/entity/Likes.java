@@ -24,7 +24,6 @@ public class Likes extends BaseEntity{
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
     public static Likes of(User user, Post post) {

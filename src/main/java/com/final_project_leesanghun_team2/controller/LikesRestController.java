@@ -15,13 +15,13 @@ public class LikesRestController {
 
     /** 좋아요 누르기 **/
     @PostMapping("/{postId}/likes")
-    public Response pushLikes(@PathVariable Integer postId, Authentication authentication) {
+    public Response<String> pushLikes(@PathVariable Integer postId, Authentication authentication) {
         return Response.success(likesService.push(postId, authentication));
     }
 
     /** 좋아요 개수 **/
     @GetMapping("/{postId}/likes")
-    public Response showLikes(@PathVariable Integer postId) {
+    public Response<Long> showLikes(@PathVariable Integer postId) {
         return Response.success(likesService.show(postId));
     }
 }
