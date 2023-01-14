@@ -31,4 +31,13 @@ public class CommentModifyResponse {
                 comment.getLastModifiedAt()
         );
     }
+
+    public CommentModifyResponse(Comment comment) {
+        this.id = comment.getId();
+        this.comment = comment.getComment();
+        this.userName = comment.getUser().getUserName();
+        this.postId = comment.getPost().getId();
+        this.createdAt = comment.getCreatedAt();
+        this.lastModifiedAt = comment.getLastModifiedAt();
+    }
 }

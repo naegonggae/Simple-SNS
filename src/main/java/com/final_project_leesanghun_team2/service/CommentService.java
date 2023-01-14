@@ -95,6 +95,7 @@ public class CommentService {
 
         // Comment -> CommentModifyResponse 형태로 포장
         return CommentModifyResponse.ofModify(savedComment);
+        // return new CommentModifyResponse(savedComment);
     }
 
     /** 댓글 삭제 **/
