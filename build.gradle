@@ -35,7 +35,7 @@ dependencies {
 	// 타임리프
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	//Valid
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.2'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
 
 }
 

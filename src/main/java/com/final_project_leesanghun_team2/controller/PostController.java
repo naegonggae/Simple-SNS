@@ -14,6 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
+
 @Controller
 @RequestMapping("/posts")
 @RequiredArgsConstructor
@@ -50,8 +53,11 @@ public class PostController {
     }
 
     @PostMapping("/form")
-    public String submit(Post post) {
-
+    public String submit(@Valid Post post, BindingResult bindingResult) {
+        //PostValidator.validate(post, bindingResult); // 내용검증
+        if (bindingResult.hasErrors()) { // NotNull, Size 검증
+            return "posts/form";
+        }
         postRepository.save(post);
         return "redirect:/posts/list";
     }
@@ -68,8 +74,10 @@ public class PostController {
     }
 
     @PostMapping("/modify")
-    public String submitModify(Post post) {
-
+    public String submitModify(@Valid Post post, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) { // NotNull, Size 검증
+            return "posts/modify";
+        }
         postRepository.save(post);
         return "redirect:/posts/list";
     }
