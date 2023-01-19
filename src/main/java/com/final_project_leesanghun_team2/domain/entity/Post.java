@@ -4,6 +4,8 @@ import com.final_project_leesanghun_team2.domain.request.PostModifyRequest;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,7 +19,12 @@ public class Post extends BaseEntity{
     @Column(name = "post_id")
     private Integer id;
 
+    @NotNull
+    @Size(min=2, max=50, message = "제목을 2글자 이상, 30글자 이하로 입력해주세요.")
     private String title;
+
+    @NotNull
+    @Size(min=2, max=50, message = "내용을 2글자 이상, 30글자 이하로 입력해주세요.")
     private String body;
 
     @ManyToOne(fetch = FetchType.LAZY)
