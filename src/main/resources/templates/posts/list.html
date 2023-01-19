@@ -20,7 +20,7 @@
 
     <div class="container">
         <h2>안녕</h2>
-        <p class="lead">안녕하세요 줄 글입니다.</p>
+        <p class="lead">안녕하세요 전체리스트입니다.</p>
         <div>총 건수 : <span th:text="${posts.totalElements}"></span></div>
         <form class="row g-3 d-flex justify-content-end" method="get" th:action="@{/posts/list}">
             <div class="col-auto">
@@ -42,7 +42,7 @@
             <tbody>
             <tr th:each="post : ${posts}">
                 <td th:text="${post.id}">Mark</td>
-                <td><a th:text="${post.title}" th:href="@{/posts/form(id=${post.id})}">Otto</a></td>
+                <td><a th:text="${post.title}" th:href="@{/posts/modify(id=${post.id})}">Otto</a></td>
                 <td>홍길동</td>
             </tr>
             </tbody>
